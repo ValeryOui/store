@@ -185,9 +185,16 @@ function getItemAmount(uniqueID, label, dmg)
 end
 
 function updateItemsAmount()
-  for _, data in pairs(itemConfig) do
-    data.amount = getItemAmount(data.uniqueID, data.label, data.dmg)
-  end
+    local getItemsInNetwork = ae2.getItemsInNetwork({name = uniqueID, label = label or nil, damage = dmg or nil})
+    
+    for _, data in pairs(itemConfig) do
+        for _, networkData in ipairs(getItemsInNetwork) do
+            if data.uniqueID == networkData.name and data.dmg == networkData.damage then
+                data.amount = networkData.size
+                break
+            end
+        end
+    end
 
   return true
 end
