@@ -117,11 +117,6 @@ function getItemList(subtext)
         for _, data in ipairs(itemConfig) do
             local lowtext = string.lower(subtext)
 
-            print(lowtext)
-            print(string.find(string.lower(data.uniqueID), lowtext), 
-            string.find(string.lower(data.id), lowtext) ,
-            string.find(unicode.lower(data.name), unicode.lower(subtext)))
-
             if string.find(string.lower(data.uniqueID), lowtext) 
                 or (data.label and string.find(string.lower(data.label), lowtext)) 
                 or string.find(string.lower(data.id), lowtext) 
