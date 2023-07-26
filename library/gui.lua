@@ -1045,7 +1045,7 @@ function gui.insertList(guiID, listID, value)
   _displayList(guiID, listID)
 end
 
-function gui.insertListTableString(guiID, listID, tableString)
+function gui.stringList(guiID, listID, tableString)
     local tbl = serialization.unserialize(tableString)
 
     guiID[listID].entries = tbl
