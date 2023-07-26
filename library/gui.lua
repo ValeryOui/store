@@ -1045,9 +1045,12 @@ function gui.insertList(guiID, listID, value)
   _displayList(guiID, listID)
 end
 
--- function gui.insertListTable(guiID, listID, tbl)
---     guiID[listID].entries = tbl or {}
--- end
+function gui.insertListTable(guiID, listID, tbl)
+    for _, row in ipairs(tbl) do
+        table.insert(guiID[listID].entries, row)
+    end
+    _displayList(guiID, listID)
+end
  
 function gui.removeList(guiID, listID, entry)
   table.remove(guiID[listID].entries, entry)

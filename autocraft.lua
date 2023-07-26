@@ -99,9 +99,7 @@ end
 function updateList(guiID, listID, subtext)
     gui.clearList(guiID, list_1_ID)
 
-    for _, value in ipairs(getItemList(subtext)) do
-        gui.insertList(guiID, list_1_ID, value)
-    end
+    gui.insertListTable(guiID, list_1_ID, getItemList(subtext))
 end
 
 function getItemList(subtext)
