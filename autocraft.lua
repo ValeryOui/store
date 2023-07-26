@@ -97,12 +97,12 @@ function getListRow(counter, name, id, amount, price)
 end
 
 function updateList(guiID, listID, subtext)
-    gui.clearList(guiID, list_1_ID)
-
     local temp = {
         {"Dddddddddddddddddddddddddddddd"},
         {"VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV"},
     }
+
+    gui.clearList(guiID, list_1_ID, serialization.serialize(temp))
 
     print(gui.stringList)
     -- gui.stringList(guiID, list_1_ID, serialization.serialize(temp))
