@@ -100,6 +100,8 @@ function updateList(guiID, listID, subtext)
     gui.clearList(guiID, list_1_ID)
 
     local filteredList = getItemList(subtext)
+    print(#filteredList, #itemListStrings)
+    print(serialization.serialize(filteredList))
     -- gui.tableList(guiID, list_1_ID, filteredList)
 end
 
@@ -146,6 +148,8 @@ function getItemList(subtext)
             counter = counter + 1
         end
     end
+
+    print("counter", counter)
 
     return itemListStrings
 end
