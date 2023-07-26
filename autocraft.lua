@@ -104,7 +104,8 @@ function updateList(guiID, listID, subtext)
         {"VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV"},
     }
 
-    gui.insertListTableString(guiID, list_1_ID, serialization.serialize(temp))
+    print(gui.stringList)
+    -- gui.stringList(guiID, list_1_ID, serialization.serialize(temp))
 end
 
 function getItemList(subtext)
