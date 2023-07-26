@@ -1045,10 +1045,10 @@ function gui.insertList(guiID, listID, value)
   _displayList(guiID, listID)
 end
 
-function gui.insertListTable(guiID, listID, tbl)
-    for _, row in ipairs(tbl) do
-        table.insert(guiID[listID].entries, row)
-    end
+function gui.insertListTableString(guiID, listID, tableString)
+    local tbl = serialization.unserialize(tableString)
+
+    guiID[listID].entries = tbl
     _displayList(guiID, listID)
 end
  

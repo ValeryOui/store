@@ -99,7 +99,12 @@ end
 function updateList(guiID, listID, subtext)
     gui.clearList(guiID, list_1_ID)
 
-    gui.insertListTable(guiID, list_1_ID, getItemList(subtext))
+    local temp = {
+        {"Dddddddddddddddddddddddddddddd"},
+        {"VVVVVVVVVVVVVVVVVVVVVVVVVVVVVV"},
+    }
+
+    gui.insertListTableString(guiID, list_1_ID, serialization.serialize(temp))
 end
 
 function getItemList(subtext)
