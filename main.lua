@@ -14,21 +14,22 @@ local itemConfig = require("config/buyitems")
 local depositConfig = require("config/deposititems")
 local image = require("library/image")
 local gui = require("library/gui")
-
+=require("config/buyitems")
+wget https://raw.githubusercontent.com/ValeryOui/store/master/config/buyitems.lua config/buyitems.lua
 --[[
-os.execute("del /config/image")
-os.execute("del /config/gui")
-os.execute("del /library/buyitems")
-os.execute("del /library/deposititems")
+os.execute("del library/image.lua")
+os.execute("del library/gui.lua")
+os.execute("del config/buyitems.lua")
+os.execute("del config/deposititems.lua")
 os.execute("del main")
 
-os.execute("mkdir /config")
-os.execute("mkdir /library")
+os.execute("mkdir config")
+os.execute("mkdir library")
 
-os.execute("wget https://raw.githubusercontent.com/ValeryOui/store/master/library/image.lua /library/image.lua")
-os.execute("wget https://raw.githubusercontent.com/ValeryOui/store/master/library/gui.lua /library/gui.lua")
-os.execute("wget https://raw.githubusercontent.com/ValeryOui/store/master/config/buyitems.lua /config/buyitems.lua")
-os.execute("wget https://raw.githubusercontent.com/ValeryOui/store/master/config/deposititems.lua /config/deposititems.lua")
+os.execute("wget https://raw.githubusercontent.com/ValeryOui/store/master/library/image.lua library/image.lua")
+os.execute("wget https://raw.githubusercontent.com/ValeryOui/store/master/library/gui.lua library/gui.lua")
+os.execute("wget https://raw.githubusercontent.com/ValeryOui/store/master/config/buyitems.lua config/buyitems.lua")
+os.execute("wget https://raw.githubusercontent.com/ValeryOui/store/master/config/deposititems.lua config/deposititems.lua")
 os.execute("wget https://raw.githubusercontent.com/ValeryOui/store/master/main.lua main")
 ]]
 
