@@ -1046,7 +1046,7 @@ function gui.insertList(guiID, listID, value)
 end
 
 function gui.insertListTable(guiID, listID, tbl)
-    guiID[listID].entries = tbl
+    guiID[listID].entries = tbl or {}
     _displayList(guiID, listID)
 end
  
