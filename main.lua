@@ -14,8 +14,7 @@ local itemConfig = require("config/buyitems")
 local depositConfig = require("config/deposititems")
 local image = require("library/image")
 local gui = require("library/gui")
-=require("config/buyitems")
-wget https://raw.githubusercontent.com/ValeryOui/store/master/config/buyitems.lua config/buyitems.lua
+
 --[[
 os.execute("del library/image.lua")
 os.execute("del library/gui.lua")
