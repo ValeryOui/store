@@ -1036,8 +1036,8 @@ function gui.setForeground(guiID, widgetID, color)
   end
 end
  
-function gui.clearList(guiID, listID)
-  guiID[listID].entries = {}
+function gui.clearList(guiID, listID, newList)
+  guiID[listID].entries = newList or {}
 end
  
 function gui.insertList(guiID, listID, value)
@@ -1045,10 +1045,9 @@ function gui.insertList(guiID, listID, value)
   _displayList(guiID, listID)
 end
 
-function gui.insertListTable(guiID, listID, tbl)
-    guiID[listID].entries = tbl or {}
-    _displayList(guiID, listID)
-end
+-- function gui.insertListTable(guiID, listID, tbl)
+--     guiID[listID].entries = tbl or {}
+-- end
  
 function gui.removeList(guiID, listID, entry)
   table.remove(guiID[listID].entries, entry)
