@@ -17,6 +17,8 @@ local gui = require("library/gui")
 
 
 local itemListChoose = {}
+local itemListStrings = {}
+local itemListData = {}
 
 local function compare(a,b)
     return a.name < b.name
@@ -147,6 +149,25 @@ function itemListCallback(guiID, id, rowID, text)
     itemListChoose = rowID
 end
 
+function exitButtonCallback(guiID, id)
+    local result = gui.getYesNo(sS(""), sS("Вы точно хотите выйти?"), sS(""))
+    if result == true then
+        gui.exit()
+    end
+    gui.displayGui(myGui)
+end
+
+function craftCallback(guiID, id)
+    
+end
+
+function craftEntry(guiID, id, text)
+    if tonumber(text) == nil then
+        text = string.match(text , "%d+") or 1
+        gui.setText(guiID, id, text)
+    end
+end
+
 gui.clearScreen()
 gui.setTop("Autocraft system")
 
@@ -157,8 +178,15 @@ filter = gui.newLabel(myGui, 2, 3, "Фильтр:")
 filterentry = gui.newText(myGui, 9, 3, 30, "", updateList)
 list_1_ID = gui.newList(myGui, 2, 5, 94, 42, getItemList(), itemListCallback, "                         Название                         |  В наличии   |   Цена за 1шт.  ")
 buyLabel = gui.newLabel(myGui, 98, 6, "Количество предметов:")
-buyEntry1 = gui.newText(myGui, 98, 8, 10, "1", calculateBuyEntry)
-buyInfo = gui.newLabel(myGui, 98, 10, "К оплате - " .. itemListData[1].price .. "$")
+buyEntry1 = gui.newText(myGui, 98, 8, 10, "1", craftEntry)
+
+buySuccess_up = gui.newButton(myGui, 98, 12, getButtonText(""), craftCallback)
+buySuccess = gui.newButton(myGui, 98, 13, getButtonText("Заказать"), craftCallback)
+buySuccess_down = gui.newButton(myGui, 98, 14, getButtonText(""), craftCallback)
+
+backbutton_up = gui.newButton(myGui, 138, 44, getButtonText(""), exitButtonCallback)          
+backbutton = gui.newButton(myGui, 138, 45, getButtonText("Выход"), exitButtonCallback)                          
+backbutton_down = gui.newButton(myGui, 138, 46, getButtonText(""), exitButtonCallback)        
 
 while true do
     gui.runGui(myGui)
