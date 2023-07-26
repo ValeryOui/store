@@ -298,9 +298,9 @@ end
 function updateList(guiID, listID, subtext)
   gui.clearList(guiID, list_1_ID)
 
---   for _, value in ipairs(getItemList(subtext)) do
---     gui.insertList(guiID, list_1_ID, value)
---   end
+  for _, value in ipairs(getItemList(subtext)) do
+    gui.insertList(guiID, list_1_ID, value)
+  end
 end
 
 function updateBuyList()

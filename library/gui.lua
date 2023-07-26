@@ -1037,7 +1037,7 @@ function gui.setForeground(guiID, widgetID, color)
 end
  
 function gui.clearList(guiID, listID, newList)
-  guiID[listID].entries = newList or {}
+  guiID[listID].entries = {}
 end
  
 function gui.insertList(guiID, listID, value)
