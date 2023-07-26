@@ -99,7 +99,9 @@ end
 function updateList(guiID, listID, subtext)
     gui.clearList(guiID, list_1_ID)
 
-    gui.stringList(guiID, list_1_ID, serialization.serialize(temp))
+    local temp = {"123", "456", "789"}
+
+    gui.tableList(guiID, list_1_ID, serialization.serialize(temp))
 end
 
 function getItemList(subtext)

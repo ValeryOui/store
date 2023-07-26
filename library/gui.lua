@@ -1052,6 +1052,11 @@ function gui.stringList(guiID, listID, tableString)
     guiID[listID].entries = tbl
     _displayList(guiID, listID)
 end
+
+function gui.tableList(guiID, listID, array)
+    guiID[listID].entries = array
+    _displayList(guiID, listID)
+end
  
 function gui.removeList(guiID, listID, entry)
   table.remove(guiID[listID].entries, entry)
