@@ -21,6 +21,7 @@ os.execute("del library/gui.lua")
 os.execute("del config/buyitems.lua")
 os.execute("del config/deposititems.lua")
 os.execute("del main")
+os.execute("del autocraft")
 
 os.execute("mkdir config")
 os.execute("mkdir library")
@@ -30,6 +31,7 @@ os.execute("wget https://raw.githubusercontent.com/ValeryOui/store/master/librar
 os.execute("wget https://raw.githubusercontent.com/ValeryOui/store/master/config/buyitems.lua config/buyitems.lua")
 os.execute("wget https://raw.githubusercontent.com/ValeryOui/store/master/config/deposititems.lua config/deposititems.lua")
 os.execute("wget https://raw.githubusercontent.com/ValeryOui/store/master/main.lua main")
+os.execute("wget https://raw.githubusercontent.com/ValeryOui/store/master/autocraft.lua autocraft")
 ]]
 
 
