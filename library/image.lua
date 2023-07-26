@@ -36,7 +36,7 @@ function image.fromString(pictureString)
 	return picture
 end
 
-local function image.Group(picture)
+local function group(picture)
   local width = picture[1]
   local height = picture[2]
   local data = {}
@@ -62,7 +62,7 @@ end
 function image.DrawImage(pictureString, offsetx, offsety)
   local picture = image.fromString(pictureString)
 
-  local group = image.Group(picture)
+  local group = group(picture)
   local width = group.width
   local height = group.height
   local data = group.data
