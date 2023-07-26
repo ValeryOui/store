@@ -147,6 +147,9 @@ function itemListCallback(guiID, id, rowID, text)
     itemListChoose = rowID
 end
 
+gui.clearScreen()
+gui.setTop("Autocraft system")
+
 myGui = gui.newGui(2, 2, 158, 48, true)                                                                       -- Главная менюшка
 welcomeLabel = gui.newLabel(myGui, 2, 1, "") -- Строка приветствия
   
@@ -156,9 +159,6 @@ list_1_ID = gui.newList(myGui, 2, 5, 94, 42, getItemList(), itemListCallback, " 
 buyLabel = gui.newLabel(myGui, 98, 6, "Количество предметов:")
 buyEntry1 = gui.newText(myGui, 98, 8, 10, "1", calculateBuyEntry)
 buyInfo = gui.newLabel(myGui, 98, 10, "К оплате - " .. itemListData[1].price .. "$")
-
-gui.clearScreen()
-gui.setTop(prgName)
 
 while true do
     gui.runGui(myGui)

