@@ -1044,6 +1044,11 @@ function gui.insertList(guiID, listID, value)
   table.insert(guiID[listID].entries, value)
   _displayList(guiID, listID)
 end
+
+function gui.insertListTable(guiID, listID, tbl)
+    guiID[listID].entries = tbl
+    _displayList(guiID, listID)
+end
  
 function gui.removeList(guiID, listID, entry)
   table.remove(guiID[listID].entries, entry)
@@ -1269,7 +1274,7 @@ function gui.runGui(guiID)
 
   local e, _, x, y, button, _, pl = ev[1], ev[2], ev[3], ev[4], ev[5], ev[6] 
   if e == nil or gui.pimPlayer ~= ev[6] then
-    if isOwner(e) then
+    if isOwner(ev[6]) then
         -- continue
     else
         return false
