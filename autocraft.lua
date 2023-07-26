@@ -100,7 +100,7 @@ function updateList(guiID, listID, subtext)
     gui.clearList(guiID, list_1_ID)
 
     local filteredList = getItemList(subtext)
-    gui.tableList(guiID, list_1_ID, filteredList)
+    -- gui.tableList(guiID, list_1_ID, filteredList)
 end
 
 function getItemList(subtext)
