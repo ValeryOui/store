@@ -99,9 +99,8 @@ end
 function updateList(guiID, listID, subtext)
     gui.clearList(guiID, list_1_ID)
 
-    local temp = {"123", "456", "789"}
-
-    gui.tableList(guiID, list_1_ID, serialization.serialize(temp))
+    local filteredList = getItemList(subtext)
+    gui.tableList(guiID, list_1_ID, filteredList)
 end
 
 function getItemList(subtext)
@@ -115,6 +114,12 @@ function getItemList(subtext)
     if subtext and subtext ~= "" then
         for _, data in ipairs(itemConfig) do
             local lowtext = string.lower(subtext)
+
+            print(lowtext)
+            print(string.find(string.lower(data.uniqueID), lowtext), 
+            string.find(string.lower(data.id), lowtext) ,
+            string.find(unicode.lower(data.name), unicode.lower(subtext)))
+
             if string.find(string.lower(data.uniqueID), lowtext) 
                 or (data.label and string.find(string.lower(data.label), lowtext)) 
                 or string.find(string.lower(data.id), lowtext) 
