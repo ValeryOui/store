@@ -2,14 +2,22 @@ local component = require("component")
 local gpu = component.gpu
 local ae2 = component.me_controller 
 local mei = component.me_interface 
-local gui = require("gui")
 local event = require("event")
 local ttf = require("tableToFile")
 local io = require("io")
 local unicode = require("unicode")
 local serialization = require("serialization")
 local pim = component.pim
-local itemConfig = require("itemconfig")
+
+-- load
+local configFolder = require("config")
+local libraryFolder = require("library")
+
+local image = libraryFolder.image 
+local gui = libraryFolder.gui 
+
+local itemConfig = configFolder.buyitems
+local itemConfig = configFolder.deposititems
 
 
 ---image converter
