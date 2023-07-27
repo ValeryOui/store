@@ -50,6 +50,8 @@ local depositListChoose, buyListChoose, curPage = 1, 1, 1
 
 local prgName = "Store v1.0 by LIMI_np"
 
+-- global 
+getItemsInNetwork = {}
 
 ------------ Database ------------------------------------
 
@@ -194,11 +196,8 @@ function getItemAmount(uniqueID, label, dmg)
 end
 
 function updateItemsAmount()
-    print("TYT")
-    os.sleep(0.01)
-    local getItemsInNetwork = ae2.getItemsInNetwork()
-    os.sleep(0.01)
-    print("TYT2")
+    getItemsInNetwork = {}
+    getItemsInNetwork = ae2.getItemsInNetwork()
     
     for _, data in pairs(itemConfig) do
       for _, networkData in ipairs(getItemsInNetwork) do
@@ -208,8 +207,6 @@ function updateItemsAmount()
         end
       end
     end
-    print("TYT3")
-    os.sleep(0.01)
 
   return true
 end
