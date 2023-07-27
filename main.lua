@@ -127,8 +127,8 @@ local function getNewText(dist1, dist2, dist3, text1, text2, text3)
   return column1 .. column2 .. column3
 end
 
-local function getButtonText(text)
-  local buttonWidth = 16
+local function getButtonText(text, width)
+  local buttonWidth = width or 16
   local textWidth = unicode.wlen(text)
 
   if textWidth < buttonWidth then
@@ -140,6 +140,7 @@ local function getButtonText(text)
 end
 
 local function sS(text, width) -- stringSpacing
+  text = text or ""
   width = width or 38
   local wlen = unicode.wlen(text) or 0
   local margin = math.floor((width - wlen) / 2)
@@ -147,7 +148,14 @@ local function sS(text, width) -- stringSpacing
   return string.rep(" ", margin) .. text .. string.rep(" ", width - wlen - margin)
 end
 
+local function sS2(text, width) -- stringSpacing
+  text = text or ""
+  width = width or 38
+  local wlen = unicode.wlen(text) or 0
+  local margin = width - wlen
 
+  return text .. string.rep(" ", margin)
+end
 
 
 
@@ -186,7 +194,7 @@ function getItemAmount(uniqueID, label, dmg)
 end
 
 function updateItemsAmount()
-    local getItemsInNetwork = ae2.getItemsInNetwork({name = uniqueID, label = label or nil, damage = dmg or nil})
+    local getItemsInNetwork = ae2.getItemsInNetwork()
     
     for _, data in pairs(itemConfig) do
         for _, networkData in ipairs(getItemsInNetwork) do
@@ -287,7 +295,7 @@ end
 
 function exitButtonCallback(guiID, id)
   local result = gui.getYesNo(sS(""), sS("Выход только для разработчика!"), sS(""))
-  if result == true and pimPlayer and pimPlayer == "LIMI_np" then
+  if result == true and pimPlayer == "LIMI_np" then
     gui.exit()
   end
   gui.displayGui(myGui)
@@ -385,7 +393,7 @@ function takeawayItemsCountByID(uniqueID, amount)
 end
 
 function showMsg(msg1, msg2, msg3)
-  gui.showMsg(msg1 or sS(""), msg2 or sS(""), msg3 or sS(""))
+  gui.showMsg(sS(msg1), sS(msg2), sS(msg3))
 end
 
 function updatePlayerMoney()
