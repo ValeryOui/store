@@ -19,6 +19,8 @@ local gui = require("library/gui")
 local itemListChoose = {}
 local itemListStrings = {}
 local itemListData = {}
+local delay = 3
+local lastrequest
 
 local function compare(a,b)
     return a.name < b.name
@@ -233,12 +235,12 @@ function statusSetText(text)
     text = text or ""
     local text2 = ""
     if unicode.wlen(text) > 156 then
-        text2 = unicode.sub(text, 157)
-        text = unicode.sub(text, 1, 156)
+        text2 = unicode.sub(text, 156)
+        text = unicode.sub(text, 1, 155)
     end
 
-    gui.setText(myGui, status, sS2(text, 158))
-    gui.setText(myGui, status2, sS2(text, 158))
+    gui.setText(myGui, status, sS2(text, 156))
+    gui.setText(myGui, status2, sS2(text2, 156))
 end
 
 function statusUpdateText()
@@ -249,10 +251,21 @@ function statusUpdateText()
     end
 
     if #items > 0 then
-        statusSetText("Статус: Cоздание [" .. serialization.serialize(items) .. "]")
+        statusSetText("Статус ("..lastrequest.."): Cоздание [" .. serialization.serialize(items) .. "]")
     else
-        statusSetText("Статус: Нету предметов создания")
+        statusSetText("Статус ("..lastrequest.."): Нету предметов создания")
     end
+end
+
+function CurTime()
+    return os.time() / 100
+end
+
+function autocraft()
+    if not lastrequest or lastrequest < CurTime() then
+        craftAllCallback()
+        lastrequest = CurTime() + delay
+    end 
 end
 
 function craftAllCallback(guiID, id)
@@ -312,4 +325,5 @@ backbutton_down = gui.newButton(myGui, 138, 46, getButtonText(""), exitButtonCal
 
 while true do
     gui.runGui(myGui)
+    autocraft()
 end
