@@ -163,11 +163,15 @@ local activeRequests = {}
 local saveEmptyCpus = 2
 
 local function updateActiveRequests()
+    local temp = {}
     for _, data in ipairs(activeRequests) do
-        if data.request.IsDone() or data.request.IsCanceled() then
-            table.remove(activeRequests, _)
+        if not data.request.isDone() or not data.request.isCanceled() then
+            table.insert(temp, data)
         end
     end
+
+    activeRequests = temp
+    statusUpdateText()
 end
 
 local function getEmptyCpus()
@@ -219,14 +223,29 @@ local function findMinItemAmount()
 end
 
 function statusSetText(text)
+    text = text or ""
     local text2 = ""
     if unicode.wlen(text) > 156 then
-        text2 = unicode.sub(157)
-        text = unicode.sub(1, 156)
+        text2 = unicode.sub(text, 157)
+        text = unicode.sub(text, 1, 156)
     end
 
     gui.setText(myGui, status, text)
     gui.setText(myGui, status2, text2)
+end
+
+function statusUpdateText()
+    local items = {}
+
+    for _, data in ipairs(activeRequests) do
+        table.insert(items, "(x"..data.requestquantity..")"..data.name)
+    end
+
+    if #items > 0 then
+        statusSetText("Статус: Cоздание [" .. serialization.serialize(items) .. "]")
+    else
+        statusSetText("Статус: Нету предметов создания")
+    end
 end
 
 function craftAllCallback(guiID, id)
@@ -241,17 +260,11 @@ function craftAllCallback(guiID, id)
         if res == true then
             emptyCpus = emptyCpus - 1
         else
-            statusSetText("Статус: все предметы соответствуют минимальному количеству.")
-            return 
+            emptyCpus = 0
         end
     end
 
-    local items = {}
-    for _, data in ipairs(activeRequests) do
-        table.insert(items, "(x"..data.requestquantity..")"..data.name)
-    end
-
-    statusSetText("Статус: Cоздание [" .. serialization.serialize(items) .. "]")
+    statusUpdateText()
 end
 
 function craftEntry(guiID, id, text)
