@@ -446,9 +446,13 @@ function buyListCallback(guiID, id, rowID, text)
   local result = tonumber(guiID[buyEntry1].text) * itemListData[buyListChoose].price
   gui.setText(guiID, buyInfo, "К оплате - " .. result .. "$             ")
   
-  if itemListData[buyListChoose].image and curPage == 2 then
-    -- drawObodok(99, 17, 17, 9, 0x0D1117, 0xFFFFFF)
-    image.DrawImage(itemListData[buyListChoose].image, 100, 18)
+  if curPage == 2 then
+    if itemListData[buyListChoose].image and curPage == 2 then
+      -- drawObodok(99, 17, 17, 9, 0x0D1117, 0xFFFFFF)
+      image.DrawImage(itemListData[buyListChoose].image, 100, 18)
+    else
+      gpu.fill(100, 18, 16, 6, 0x0D1117)
+    end
   end
 end
 
