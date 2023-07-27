@@ -434,10 +434,10 @@ function drawObodok(x, y, w, h, bg, fg)
   gpu.set(x+w, y, "╗")
   gpu.set(x+w, y+h, "╗")
   gpu.set(x, y+h, "╚")
-  for i = x, x+w do gpu.set(i, y, "═")
-  for i = x, x+w do gpu.set(i, y+h, "═")
-  for i = y, y+h do gpu.set(i, x, "║")
-  for i = y, y+h do gpu.set(i, x+w, "║")
+  for i = x, x+w do gpu.set(i, y, "═") end 
+  for i = x, x+w do gpu.set(i, y+h, "═") end 
+  for i = y, y+h do gpu.set(i, x, "║") end 
+  for i = y, y+h do gpu.set(i, x+w, "║") end 
 end
 
 function buyListCallback(guiID, id, rowID, text)
