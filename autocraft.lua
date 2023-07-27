@@ -99,7 +99,7 @@ end
 function getListRow(counter, name, id, amount, min)
     local tempid = " (#" .. id .. ")"
     local tempname = " " .. counter .. ". " .. name
-    local newname = unicode.wlen(tempname) > (100 - unicode.wlen(tempid)) and (unicode.sub(tempname, 1, 57 - unicode.wlen(tempid)) .. "...") or tempname
+    local newname = unicode.wlen(tempname) > (100 - unicode.wlen(tempid)) and (unicode.sub(tempname, 1, 97 - unicode.wlen(tempid)) .. "...") or tempname
     local row = getNewText(100, 15, 15, newname .. tempid, amount, min)
 
     return row
