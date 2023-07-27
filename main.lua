@@ -448,7 +448,7 @@ function buyListCallback(guiID, id, rowID, text)
   
   if curPage == 2 then
     if itemListData[buyListChoose].image and curPage == 2 then
-      drawObodok(100, 17, 17, 9, 0x0D1117, 0xFFFFFF)
+      drawObodok(100, 17, 17, 9, 0x0D1117, 0x141B24)
       image.DrawImage(itemListData[buyListChoose].image, 102, 10)
     else
       gpu.fill(100, 18, 16, 6, 0x0D1117)
