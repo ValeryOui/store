@@ -431,7 +431,7 @@ function buyListCallback(guiID, id, rowID, text)
 
   local result = tonumber(guiID[buyEntry1].text) * itemListData[buyListChoose].price
   gui.setText(guiID, buyInfo, "К оплате - " .. result .. "$             ")
-
+  
   if itemListData[buyListChoose].image then
     image.DrawImage(itemListData[buyListChoose].image, 98, 15)
   end

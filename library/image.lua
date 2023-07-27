@@ -55,7 +55,7 @@ function image.DrawImage(pictureString, offsetx, offsety)
 
   for y, array in ipairs(data) do
     for x, info in ipairs(array) do
-      image.DrawPixel(offsety, offsetx, x, y, info.char, info.background, info.foreground, info.alpha)
+      image.DrawPixel(offsetx, offsety, x, y, info.char, info.background, info.foreground, info.alpha)
     end
   end
 end
