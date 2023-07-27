@@ -430,14 +430,14 @@ function drawObodok(x, y, w, h, bg, fg)
   gpu.setBackground(bg)
   gpu.setForeground(fg)
 
-  gpu.set(x, y, "╔")
-  gpu.set(x+w, y, "╗")
-  gpu.set(x+w, y+h, "╗")
-  gpu.set(x, y+h, "╚")
   for i = x, x+w do gpu.set(i, y, "═") end 
   for i = x, x+w do gpu.set(i, y+h, "═") end 
-  for i = y, y+h do gpu.set(i, x, "║") end 
-  for i = y, y+h do gpu.set(i, x+w, "║") end 
+  for i = y, y+h do gpu.set(x, i, "║") end 
+  for i = y, y+h do gpu.set(x+w, i,"║") end 
+  gpu.set(x, y, "╔")
+  gpu.set(x+w, y, "╗")
+  gpu.set(x+w, y+h, "╝")
+  gpu.set(x, y+h, "╚")
 end
 
 function buyListCallback(guiID, id, rowID, text)
@@ -447,7 +447,7 @@ function buyListCallback(guiID, id, rowID, text)
   gui.setText(guiID, buyInfo, "К оплате - " .. result .. "$             ")
   
   if itemListData[buyListChoose].image and curPage == 2 then
-    drawObodok(99, 17, 18, 18, 0x0D1117, 0xFFFFFF)
+    drawObodok(99, 17, 18, 9, 0x0D1117, 0xFFFFFF)
     image.DrawImage(itemListData[buyListChoose].image, 100, 18)
   end
 end
