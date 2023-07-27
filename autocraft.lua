@@ -252,9 +252,9 @@ function statusUpdateText()
     end
 
     if #items > 0 then
-        statusSetText("Статус ("..lastrequest.."): Cоздание [" .. serialization.serialize(items) .. "]")
+        statusSetText("Статус ("..tostring(lastrequest or 0).."): Cоздание [" .. serialization.serialize(items) .. "]")
     else
-        statusSetText("Статус ("..lastrequest.."): Нету предметов создания")
+        statusSetText("Статус ("..tostring(lastrequest or 0).."): Нету предметов создания")
     end
 end
 
