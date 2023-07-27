@@ -99,7 +99,7 @@ end
 function getListRow(counter, name, id, amount, min)
     local tempid = " (#" .. id .. ")"
     local tempname = " " .. counter .. ". " .. name
-    local newname = unicode.wlen(tempname) > (60 - unicode.wlen(tempid)) and (unicode.sub(tempname, 1, 57 - unicode.wlen(tempid)) .. "...") or tempname
+    local newname = unicode.wlen(tempname) > (100 - unicode.wlen(tempid)) and (unicode.sub(tempname, 1, 57 - unicode.wlen(tempid)) .. "...") or tempname
     local row = getNewText(100, 15, 15, newname .. tempid, amount, min)
 
     return row
@@ -136,7 +136,7 @@ function getItemList(subtext)
             then
                 table.insert(itemListData, data)
 
-                local row = getListRow(counter, data.name .. (data.label or ""), data.id, data.amount, data.minItems or 1)
+                local row = getListRow(counter, data.name .. " " .. (data.label or ""), data.id, data.amount, data.minItems or 1)
 
                 table.insert(itemListStrings, row)
                 counter = counter + 1
@@ -146,7 +146,7 @@ function getItemList(subtext)
         for _, data in ipairs(itemConfig) do
             table.insert(itemListData, data)
 
-            local row = getListRow(counter, data.name .. (data.label or ""), data.id, data.amount, data.minItems or 1)
+            local row = getListRow(counter, data.name .. " " .. (data.label or ""), data.id, data.amount, data.minItems or 1)
 
             table.insert(itemListStrings, row)
             counter = counter + 1
