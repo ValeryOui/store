@@ -448,8 +448,8 @@ function buyListCallback(guiID, id, rowID, text)
   
   if curPage == 2 then
     if itemListData[buyListChoose].image and curPage == 2 then
-      -- drawObodok(99, 17, 17, 9, 0x0D1117, 0xFFFFFF)
-      image.DrawImage(itemListData[buyListChoose].image, 100, 18)
+      drawObodok(100, 17, 17, 9, 0x0D1117, 0xFFFFFF)
+      image.DrawImage(itemListData[buyListChoose].image, 102, 10)
     else
       gpu.fill(100, 18, 16, 6, 0x0D1117)
     end
@@ -575,13 +575,13 @@ pages[1] = {buymenu_up, buymenu, buymenu_down,
 filter = gui.newLabel(myGui, 2, 3, "Фильтр:")
 filterentry = gui.newText(myGui, 9, 3, 30, "", updateList)
 list_1_ID = gui.newList(myGui, 2, 5, 94, 42, getItemList(), buyListCallback, "                         Название                         |  В наличии   |   Цена за 1шт.  ")
-buyLabel = gui.newLabel(myGui, 98, 6, "Количество предметов:")
-buyEntry1 = gui.newText(myGui, 98, 8, 10, "1", calculateBuyEntry)
-buyInfo = gui.newLabel(myGui, 98, 10, "К оплате - " .. itemListData[1].price .. "$")
+buyLabel = gui.newLabel(myGui, 98, 16, "Количество предметов:")
+buyEntry1 = gui.newText(myGui, 98, 8, 20, "1", calculateBuyEntry)
+buyInfo = gui.newLabel(myGui, 98, 20, "К оплате - " .. itemListData[1].price .. "$")
 
-buySuccess_up = gui.newButton(myGui, 98, 12, getButtonText(""), buySuccessCallback)
-buySuccess = gui.newButton(myGui, 98, 13, getButtonText("Купить"), buySuccessCallback)
-buySuccess_down = gui.newButton(myGui, 98, 14, getButtonText(""), buySuccessCallback)
+buySuccess_up = gui.newButton(myGui, 98, 22, getButtonText(""), buySuccessCallback)
+buySuccess = gui.newButton(myGui, 98, 23, getButtonText("Купить"), buySuccessCallback)
+buySuccess_down = gui.newButton(myGui, 98, 24, getButtonText(""), buySuccessCallback)
 
 pages[2] = {filter, filterentry, list_1_ID, buyLabel, buyEntry1, buyInfo, buySuccess_up, buySuccess, buySuccess_down} setPageVisible(2, false)
 
