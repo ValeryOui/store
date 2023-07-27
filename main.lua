@@ -426,6 +426,20 @@ function depositSuccessCallback(guiID, id)
   updatePlayerMoney()
 end
 
+function drawObodok(x, y, w, h, bg, fg)
+  gpu.setBackground(bg)
+  gpu.setForeground(fg)
+
+  gpu.set(x, y, "╔")
+  gpu.set(x+w, y, "╗")
+  gpu.set(x+w, y+h, "╗")
+  gpu.set(x, y+h, "╚")
+  for i = x, x+w do gpu.set(i, y, "═")
+  for i = x, x+w do gpu.set(i, y+h, "═")
+  for i = y, y+h do gpu.set(i, x, "║")
+  for i = y, y+h do gpu.set(i, x+w, "║")
+end
+
 function buyListCallback(guiID, id, rowID, text)
   buyListChoose = rowID
 
@@ -433,7 +447,8 @@ function buyListCallback(guiID, id, rowID, text)
   gui.setText(guiID, buyInfo, "К оплате - " .. result .. "$             ")
   
   if itemListData[buyListChoose].image and curPage == 2 then
-    image.DrawImage(itemListData[buyListChoose].image, 100, 17)
+    drawObodok(99, 17, 18, 18, 0x0D1117, 0xFFFFFF)
+    image.DrawImage(itemListData[buyListChoose].image, 100, 18)
   end
 end
 
@@ -475,7 +490,7 @@ function buySuccessCallback(guiID, id)
   -- Проверка надурака
   local row1 = "Вы хотите купить за " .. itemListData[buyListChoose].price .. "$ (" .. amount .. " шт.)"
   local row2 = unicode.wlen(itemListData[buyListChoose].name) > 38 and (unicode.sub(itemListData[buyListChoose].name, 1, 36) .. "-") or (itemListData[buyListChoose].name .. "?")
-  local row3 = unicode.wlen(itemListData[buyListChoose].name) > 38 and (unicode.sub(itemListData[buyListChoose].name, 37) .. "?") or nil
+  local row3 = unicode.wlen(itemListData[buyListChoose].name) >ц 38 and (unicode.sub(itemListData[buyListChoose].name, 37) .. "?") or nil
   local result = gui.getYesNo(row1, row2, row3)
   if not result then
     return gui.displayGui(myGui)
