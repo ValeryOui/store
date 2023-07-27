@@ -1546,7 +1546,7 @@ function gui.saveTable(tbl,filename )
           print ("Gui-lib: Error saving table " .. filename .." -> " .. err)
           return _,err 
         end
-    endц
+    end
     -- initiate variables for save procedure
     local tables,lookup = { tbl },{ [tbl] = 1 }
     file:write( "return {"..charE )
