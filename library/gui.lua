@@ -1036,8 +1036,7 @@ function gui.setForeground(guiID, widgetID, color)
   end
 end
  
-function gui.clearList(guiID, listID, newList)
-    print(newList)
+function gui.clearList(guiID, listID)
   guiID[listID].entries = {}
 end
  
