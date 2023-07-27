@@ -194,16 +194,22 @@ function getItemAmount(uniqueID, label, dmg)
 end
 
 function updateItemsAmount()
+    print("TYT")
+    os.sleep(1)
     local getItemsInNetwork = ae2.getItemsInNetwork()
+    os.sleep(1)
+    print("TYT2")
     
     for _, data in pairs(itemConfig) do
-        for _, networkData in ipairs(getItemsInNetwork) do
-            if data.uniqueID == networkData.name and data.dmg == networkData.damage then
-                data.amount = networkData.size
-                break
-            end
+      for _, networkData in ipairs(getItemsInNetwork) do
+        if data.uniqueID == networkData.name and data.dmg == networkData.damage then
+          data.amount = networkData.size
+          break
         end
+      end
     end
+    print("TYT3")
+    os.sleep(1)
 
   return true
 end
