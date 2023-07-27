@@ -1300,12 +1300,21 @@ function gui.runGui(guiID)
     for i = 1, #guiID do
       if guiID[i].type == "list" and guiID[i].enabled == true then
         if x > guiID[i].x - 1 and x < guiID[i].x + guiID[i].width and y > guiID[i].y and y < guiID[i].y + guiID[i].height - 1 then
-          if ev[5] then
-            guiID[i].active = guiID[i].active + guiID[i].height - 2
-            guiID[i].selected = guiID[i].active
+          if ev[5] == -1 then
+            if guiID[i].active + guiID[i].height - 2 < #guiID[i].entries + 1 then
+              guiID[i].active = guiID[i].active + guiID[i].height - 2
+              guiID[i].selected = guiID[i].active
+            end
+          else
+            guiID[i].active = guiID[i].active - guiID[i].height + 2
+            if guiID[i].active < 1 then
+              guiID[i].active = 1
+            end
           end
+          guiID[i].selected = guiID[i].active
+          _displayList(guiID, i)
         end
-        -- _displayList(guiID, i)
+        -- 
       end
     end
     return 
