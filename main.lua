@@ -195,9 +195,9 @@ end
 
 function updateItemsAmount()
     print("TYT")
-    os.sleep(1)
+    os.sleep(0.01)
     local getItemsInNetwork = ae2.getItemsInNetwork()
-    os.sleep(1)
+    os.sleep(0.01)
     print("TYT2")
     
     for _, data in pairs(itemConfig) do
@@ -209,7 +209,7 @@ function updateItemsAmount()
       end
     end
     print("TYT3")
-    os.sleep(1)
+    os.sleep(0.01)
 
   return true
 end
