@@ -490,7 +490,7 @@ function buySuccessCallback(guiID, id)
   -- Проверка надурака
   local row1 = "Вы хотите купить за " .. itemListData[buyListChoose].price .. "$ (" .. amount .. " шт.)"
   local row2 = unicode.wlen(itemListData[buyListChoose].name) > 38 and (unicode.sub(itemListData[buyListChoose].name, 1, 36) .. "-") or (itemListData[buyListChoose].name .. "?")
-  local row3 = unicode.wlen(itemListData[buyListChoose].name) >ц 38 and (unicode.sub(itemListData[buyListChoose].name, 37) .. "?") or nil
+  local row3 = unicode.wlen(itemListData[buyListChoose].name) > 38 and (unicode.sub(itemListData[buyListChoose].name, 37) .. "?") or nil
   local result = gui.getYesNo(row1, row2, row3)
   if not result then
     return gui.displayGui(myGui)
