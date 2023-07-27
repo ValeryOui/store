@@ -87,6 +87,7 @@ function updateItemsAmount()
         for _, networkData in pairs(getItemsInNetwork) do
             if data.uniqueID == networkData.name and data.dmg == networkData.damage then
                 data.amount = networkData.size
+                data.label = networkData.label
                 break
             end
         end
@@ -99,7 +100,7 @@ function getListRow(counter, name, id, amount, min)
     local tempid = " (#" .. id .. ")"
     local tempname = " " .. counter .. ". " .. name
     local newname = unicode.wlen(tempname) > (60 - unicode.wlen(tempid)) and (unicode.sub(tempname, 1, 57 - unicode.wlen(tempid)) .. "...") or tempname
-    local row = getNewText(60, 15, 15, newname .. tempid, amount, min)
+    local row = getNewText(100, 15, 15, newname .. tempid, amount, min)
 
     return row
 end
@@ -135,7 +136,7 @@ function getItemList(subtext)
             then
                 table.insert(itemListData, data)
 
-                local row = getListRow(counter, data.name, data.id, data.amount, data.minItems or 1)
+                local row = getListRow(counter, data.name .. (data.label or ""), data.id, data.amount, data.minItems or 1)
 
                 table.insert(itemListStrings, row)
                 counter = counter + 1
@@ -145,7 +146,7 @@ function getItemList(subtext)
         for _, data in ipairs(itemConfig) do
             table.insert(itemListData, data)
 
-            local row = getListRow(counter, data.name, data.id, data.amount, data.minItems or 1)
+            local row = getListRow(counter, data.name .. (data.label or ""), data.id, data.amount, data.minItems or 1)
 
             table.insert(itemListStrings, row)
             counter = counter + 1
