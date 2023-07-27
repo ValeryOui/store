@@ -72,7 +72,7 @@ function updateItemsAmount()
     local getItemsInNetwork = ae2.getItemsInNetwork()
     
     for _, data in pairs(itemConfig) do
-        for _, networkData in ipairs(getItemsInNetwork) do
+        for _, networkData in pairs(getItemsInNetwork) do
             if data.uniqueID == networkData.name and data.dmg == networkData.damage then
                 data.amount = networkData.size
                 break
@@ -218,6 +218,17 @@ local function findMinItemAmount()
     return false
 end
 
+function statusSetText(text)
+    local text2 = ""
+    if unicode.wlen(text) > 156 then
+        text2 = unicode.sub(157)
+        text = unicode.sub(1, 156)
+    end
+
+    gui.setText(myGui, status, text)
+    gui.setText(myGui, status2, text2)
+end
+
 function craftAllCallback(guiID, id)
 
     local emptyCpus = getEmptyCpus()
@@ -230,7 +241,8 @@ function craftAllCallback(guiID, id)
         if res == true then
             emptyCpus = emptyCpus - 1
         else
-            return
+            statusSetText("Статус: все предметы соответствуют минимальному количеству.")
+            return 
         end
     end
 
@@ -239,15 +251,7 @@ function craftAllCallback(guiID, id)
         table.insert(items, "(x"..data.requestquantity..")"..data.name)
     end
 
-    local text = "Статус: Cоздание [" .. serialization.serialize(items) .. "]"
-    local text2 = ""
-    if unicode.wlen(text) > 156 then
-        text2 = unicode.sub(157)
-        text = unicode.sub(1, 156)
-    end
-
-    gui.setText(myGui, status, text)
-    gui.setText(myGui, status2, text2)
+    statusSetText("Статус: Cоздание [" .. serialization.serialize(items) .. "]")
 end
 
 function craftEntry(guiID, id, text)
