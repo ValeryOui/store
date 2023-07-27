@@ -55,6 +55,15 @@ local function sS(text, width) -- stringSpacing
     return string.rep(" ", margin) .. text .. string.rep(" ", width - wlen - margin)
 end
 
+local function sS2(text, width) -- stringSpacing
+    text = text or ""
+    width = width or 38
+    local wlen = unicode.wlen(text) or 0
+    local margin = width - wlen
+
+    return text .. string.rep(" ", margin)
+end
+
 function getItemData(uniqueID, label, dmg)
     return ae2.getItemsInNetwork({name = uniqueID, label = label or nil, damage = dmg or nil})[1]
 end
@@ -163,14 +172,12 @@ local activeRequests = {}
 local saveEmptyCpus = 2
 
 local function updateActiveRequests()
-    local temp = {}
     for _, data in ipairs(activeRequests) do
-        if not data.request.isDone() or not data.request.isCanceled() then
-            table.insert(temp, data)
+        if data.request.isDone() or data.request.isCanceled() then
+            table.remove(activeRequests, _)
         end
     end
 
-    activeRequests = temp
     statusUpdateText()
 end
 
@@ -230,8 +237,8 @@ function statusSetText(text)
         text = unicode.sub(text, 1, 156)
     end
 
-    gui.setText(myGui, status, text)
-    gui.setText(myGui, status2, text2)
+    gui.setText(myGui, status, sS2(text, 158))
+    gui.setText(myGui, status2, sS2(text, 158))
 end
 
 function statusUpdateText()
@@ -249,10 +256,10 @@ function statusUpdateText()
 end
 
 function craftAllCallback(guiID, id)
-
     local emptyCpus = getEmptyCpus()
     if emptyCpus <= 0 then return end
 
+    updateItemsAmount()
     updateActiveRequests()
     
     while emptyCpus > 0 do
