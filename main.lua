@@ -342,8 +342,10 @@ function calculateDepositEntry1(guiID, id, text)
     gui.setText(guiID, id, text)
   end
 
-  local result = tonumber(text) / depositListData[depositListChoose].price
+  local result = math.floor(tonumber(text) / depositListData[depositListChoose].price)
   gui.setText(guiID, depositEntry1, result)
+  
+  gui.setText(guiID, depositEntry2, result * depositListData[depositListChoose].price)
 end
 
 function calculateDepositEntry2(guiID, id, text)
