@@ -578,7 +578,7 @@ filter = gui.newLabel(myGui, 2, 3, "Фильтр:")
 filterentry = gui.newText(myGui, 9, 3, 30, "", updateList)
 list_1_ID = gui.newList(myGui, 2, 5, 94, 42, getItemList(), buyListCallback, "                         Название                         |  В наличии   |   Цена за 1шт.  ")
 buyLabel = gui.newLabel(myGui, 98, 16, "Количество предметов:")
-buyEntry1 = gui.newText(myGui, 98, 18, 16, "1", calculateBuyEntry)
+buyEntry1 = gui.newText(myGui, 98, 18, 18, "1", calculateBuyEntry)
 buyInfo = gui.newLabel(myGui, 98, 20, "К оплате - " .. itemListData[1].price .. "$")
 
 buySuccess_up = gui.newButton(myGui, 98, 22, getButtonText(""), buySuccessCallback)
