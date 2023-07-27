@@ -332,9 +332,9 @@ updateListButton_down = gui.newButton(myGui, 98, 22, getButtonText(""), updateIt
 
 autoRefreshLabel = gui.newLabel(myGui, 98, 24, "Автообновление: [выключено]")
 
-autoRefreshButton_up = gui.newButton(myGui, 98, 24, getButtonText("", 25), autoRefreshCallback)
-autoRefreshButton = gui.newButton(myGui, 98, 25, getButtonText("Вкл/выкл автообновление", 25), autoRefreshCallback)
-autoRefreshButton_down = gui.newButton(myGui, 98, 26, getButtonText("", 25), autoRefreshCallback)
+autoRefreshButton_up = gui.newButton(myGui, 98, 26, getButtonText("", 25), autoRefreshCallback)
+autoRefreshButton = gui.newButton(myGui, 98, 27, getButtonText("Вкл/выкл автообновление", 25), autoRefreshCallback)
+autoRefreshButton_down = gui.newButton(myGui, 98, 28, getButtonText("", 25), autoRefreshCallback)
 
 backbutton_up = gui.newButton(myGui, 138, 44, getButtonText(""), exitButtonCallback)          
 backbutton = gui.newButton(myGui, 138, 45, getButtonText("Выход"), exitButtonCallback)                          
