@@ -20,7 +20,8 @@ local itemListChoose = {}
 local itemListStrings = {}
 local itemListData = {}
 local delay = 3
-local lastrequest
+local lastrequest = 0
+local autoRefreshIsActice = false
 
 local function compare(a,b)
     return a.name < b.name
@@ -36,8 +37,8 @@ local function getNewText(dist1, dist2, dist3, text1, text2, text3)
     return column1 .. column2 .. column3
 end
 
-local function getButtonText(text)
-    local buttonWidth = 16
+local function getButtonText(text, width)
+    local buttonWidth = width or 16
     local textWidth = unicode.wlen(text)
 
     if textWidth < buttonWidth then
@@ -262,7 +263,7 @@ function CurTime()
 end
 
 function autocraft()
-    if not lastrequest or lastrequest < CurTime() then
+    if autoRefreshIsActice and lastrequest < CurTime() then
         craftAllCallback()
         lastrequest = CurTime() + delay
     end 
@@ -294,6 +295,16 @@ function craftEntry(guiID, id, text)
     end
 end
 
+function autoRefreshCallback(guiID, id)
+    if autoRefreshIsActice then
+        autoRefreshIsActice = false 
+        gui.setText(guiID, id, "Автообновление [выключено]")
+    else
+        autoRefreshIsActice = true
+        gui.setText(guiID, id, "Автообновление [включено]")
+    end
+end
+
 gui.clearScreen()
 gui.setTop("Autocraft system")
 
@@ -318,6 +329,10 @@ craftAllSuccess_down = gui.newButton(myGui, 98, 18, getButtonText(""), craftAllC
 updateListButton_up = gui.newButton(myGui, 98, 20, getButtonText(""), updateItemList)
 updateListButton = gui.newButton(myGui, 98, 21, getButtonText("Обновить список"), updateItemList)
 updateListButton_down = gui.newButton(myGui, 98, 22, getButtonText(""), updateItemList)
+
+autoRefreshLabel = gui.newButton(myGui, 98, 24, getButtonText("", 30), autoRefreshCallback)
+autoRefreshLabel = gui.newButton(myGui, 98, 25, getButtonText("Автообновление [выключено]", 30), autoRefreshCallback)
+autoRefreshLabel = gui.newButton(myGui, 98, 26, getButtonText("", 30), autoRefreshCallback)
 
 backbutton_up = gui.newButton(myGui, 138, 44, getButtonText(""), exitButtonCallback)          
 backbutton = gui.newButton(myGui, 138, 45, getButtonText("Выход"), exitButtonCallback)                          
