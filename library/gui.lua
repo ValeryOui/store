@@ -1296,19 +1296,21 @@ function gui.runGui(guiID)
   end
 
   -- if scroll
-  if ev[1] ~= "scroll" then
-    if guiID[i].type == "list" and guiID[i].enabled == true then
-      print(guiID, i)
-      if x == guiID[i].x +1 and y == guiID[i].y + guiID[i].height - 1 then
-        print("TYT1")
+  if ev[1] == "scroll" then
+    for i = 1, #guiID do
+      if guiID[i].type == "list" and guiID[i].enabled == true then
+        print(guiID, i)
+        if x == guiID[i].x +1 and y == guiID[i].y + guiID[i].height - 1 then
+          print("TYT1")
+        end
+        if x == guiID[i].x + guiID[i].width - 2 and y == guiID[i].y + guiID[i].height - 1 then
+          print("TYT2")
+        end
+        if x > guiID[i].x - 1 and x < guiID[i].x + guiID[i].width and y > guiID[i].y and y < guiID[i].y + guiID[i].height - 1 then
+          print("TYT3")
+        end
+        -- _displayList(guiID, i)
       end
-      if x == guiID[i].x + guiID[i].width - 2 and y == guiID[i].y + guiID[i].height - 1 then
-        print("TYT2")
-      end
-      if x > guiID[i].x - 1 and x < guiID[i].x + guiID[i].width and y > guiID[i].y and y < guiID[i].y + guiID[i].height - 1 then
-        print("TYT3")
-      end
-      -- _displayList(guiID, i)
     end
     return 
   end
