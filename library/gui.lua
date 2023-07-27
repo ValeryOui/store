@@ -1274,12 +1274,19 @@ function gui.runGui(guiID)
     return false
   end
 
+
+  -- if scroll
+
+
+
+  
   local ix = 0
-  if ev[1] ~= "touch" then
+  if ev[1] ~= "touch" and ev[1] ~= "scroll" then
     return false
   end
 
-  local e, _, x, y, button, _, pl = ev[1], ev[2], ev[3], ev[4], ev[5], ev[6] 
+  -- login
+  local e, _, x, y, button, value, pl = ev[1], ev[2], ev[3], ev[4], ev[5], ev[6] 
   if e == nil or gui.pimPlayer ~= ev[6] then
     if isOwner(ev[6]) then
         -- continue
@@ -1287,124 +1294,147 @@ function gui.runGui(guiID)
         return false
     end
   end
+
+  -- if scroll
+  if ev[1] ~= "scroll" then
+    if guiID[i].type == "list" and guiID[i].enabled == true then
+      print(guiID, i)
+      if x == guiID[i].x +1 and y == guiID[i].y + guiID[i].height - 1 then
+        print("TYT1")
+      end
+      if x == guiID[i].x + guiID[i].width - 2 and y == guiID[i].y + guiID[i].height - 1 then
+        print("TYT2")
+      end
+      if x > guiID[i].x - 1 and x < guiID[i].x + guiID[i].width and y > guiID[i].y and y < guiID[i].y + guiID[i].height - 1 then
+        print("TYT3")
+      end
+      -- _displayList(guiID, i)
+    end
+    return 
+  end
+
+
+
+
+  -- if touch
   for i = 1, #guiID do
     if guiID[i].type == "button" then
       if guiID[i].x == "center" then
-    ix = guiID.x + math.floor((guiID.width / 2)) - math.floor((guiID[i].lenght / 2))
+        ix = guiID.x + math.floor((guiID.width / 2)) - math.floor((guiID[i].lenght / 2))
       else
-    ix = guiID.x + guiID[i].x
+        ix = guiID.x + guiID[i].x
       end
       if x >= ix and x < (ix + guiID[i].lenght) and guiID[i].y == y then
-    if guiID[i].func and guiID[i].enabled == true then
-      guiID[i].active = true
-      gui.displayGui(guiID)
-      os.sleep(0.05)
-      guiID[i].active = false
-      gui.displayGui(guiID)
-      guiID[i].func(guiID, i)
-    end
+        if guiID[i].func and guiID[i].enabled == true then
+          guiID[i].active = true
+          gui.displayGui(guiID)
+          os.sleep(0.05)
+          guiID[i].active = false
+          gui.displayGui(guiID)
+          guiID[i].func(guiID, i)
+        end
       end
     elseif guiID[i].type == "timelabel" then
       _displayTimeLabel(guiID, i)
     elseif guiID[i].type == "checkbox" then
       ix = guiID.x + guiID[i].x + 1
       if x == ix and guiID[i].y == y then
-    if guiID[i].enabled == true then
-      if guiID[i].status == true then
-        guiID[i].status = false
-      else
-        guiID[i].status = true
-      end
-      if guiID[i].func then
-        guiID[i].func(guiID, i, guiID[i].status)
-      end
-      _displayCheckbox(guiID, i)
-    end
+        if guiID[i].enabled == true then
+          if guiID[i].status == true then
+            guiID[i].status = false
+          else
+            guiID[i].status = true
+          end
+          if guiID[i].func then
+            guiID[i].func(guiID, i, guiID[i].status)
+          end
+          _displayCheckbox(guiID, i)
+        end
       end
     elseif guiID[i].type == "radio" then
       ix = guiID.x + guiID[i].x + 1
       if x == ix and guiID[i].y == y then
-    if guiID[i].enabled == true then
-      for c = 1, #guiID do
-        if guiID[c].type == "radio" then
-          guiID[c].status = false
-          if guiID[i].func then
-        guiID[i].func(guiID, i, guiID[i].status)
+        if guiID[i].enabled == true then
+          for c = 1, #guiID do
+            if guiID[c].type == "radio" then
+              guiID[c].status = false
+              if guiID[i].func then
+            guiID[i].func(guiID, i, guiID[i].status)
+              end
+              _displayRadio(guiID, c)
+            end
           end
-          _displayRadio(guiID, c)
+          guiID[i].status = true
+          if guiID[i].func then
+            guiID[i].func(guiID, i, guiID[i].status)
+          end
+          _displayRadio(guiID, i)
         end
-      end
-      guiID[i].status = true
-      if guiID[i].func then
-        guiID[i].func(guiID, i, guiID[i].status)
-      end
-      _displayRadio(guiID, i)
-    end
       end
     elseif guiID[i].type == "text" then
       if guiID[i].x == "center" then
-    ix = guiID.x + math.floor((guiID.width / 2)) - math.floor((guiID[i].lenght / 2))
-      else
-    ix = guiID.x + guiID[i].x
-      end
-      if x >= ix and x < (ix + guiID[i].fieldLenght) and guiID[i].y == y then
-    if guiID[i].enabled == true then
-      runInput(guiID, i)
-    end
+        ix = guiID.x + math.floor((guiID.width / 2)) - math.floor((guiID[i].lenght / 2))
+          else
+        ix = guiID.x + guiID[i].x
+          end
+          if x >= ix and x < (ix + guiID[i].fieldLenght) and guiID[i].y == y then
+        if guiID[i].enabled == true then
+          runInput(guiID, i)
+        end
       end
     elseif guiID[i].type == "list" and guiID[i].enabled == true then
       if x == guiID[i].x +1 and y == guiID[i].y + guiID[i].height - 1 then
-    guiID[i].active = guiID[i].active - guiID[i].height + 2
-    if guiID[i].active < 1 then
-      guiID[i].active = 1
-    end
-    gpu.setBackground(colorListActiveBackground)
-    gpu.setForeground(colorListActiveForeground)
-    gpu.set(guiID[i].x, guiID[i].y + guiID[i].height - 1, "[<]")
-    guiID[i].selected = guiID[i].active
---  _displayList(guiID, i)
- 
-    if guiID[i].func then
-      gpu.setBackground(colorButtonClickedBackground)
-      gpu.setForeground(colorButtonClickedForeground)
-      gpu.set(guiID[i].x, guiID[i].y + guiID[i].height - 1, "[<]")
-      os.sleep(0.05)
-      gpu.setBackground(colorListBackground)
-      gpu.setForeground(colorListForeground)
-      gpu.set(guiID[i].x, guiID[i].y + guiID[i].height - 1, "[<]")
-      guiID[i].func(guiID, i, guiID[i].selected, guiID[i].entries[guiID[i].selected])
-    end
+        guiID[i].active = guiID[i].active - guiID[i].height + 2
+        if guiID[i].active < 1 then
+          guiID[i].active = 1
+        end
+        gpu.setBackground(colorListActiveBackground)
+        gpu.setForeground(colorListActiveForeground)
+        gpu.set(guiID[i].x, guiID[i].y + guiID[i].height - 1, "[<]")
+        guiID[i].selected = guiID[i].active
+    --  _displayList(guiID, i)
+    
+        if guiID[i].func then
+          gpu.setBackground(colorButtonClickedBackground)
+          gpu.setForeground(colorButtonClickedForeground)
+          gpu.set(guiID[i].x, guiID[i].y + guiID[i].height - 1, "[<]")
+          os.sleep(0.05)
+          gpu.setBackground(colorListBackground)
+          gpu.setForeground(colorListForeground)
+          gpu.set(guiID[i].x, guiID[i].y + guiID[i].height - 1, "[<]")
+          guiID[i].func(guiID, i, guiID[i].selected, guiID[i].entries[guiID[i].selected])
+        end
       end
       if x == guiID[i].x + guiID[i].width - 2 and y == guiID[i].y + guiID[i].height - 1 then
-    if guiID[i].active + guiID[i].height - 2 < #guiID[i].entries + 1 then
-      guiID[i].active = guiID[i].active + guiID[i].height - 2
-      guiID[i].selected = guiID[i].active
-    end
-    gpu.setBackground(colorListActiveBackground)
-    gpu.setForeground(colorListActiveForeground)
-    gpu.set(guiID[i].x + guiID[i].width - 3, guiID[i].y + guiID[i].height - 1, "[>]")
---  _displayList(guiID, i)
-    
-    if guiID[i].func then
-      gpu.setBackground(colorButtonClickedBackground)
-      gpu.setForeground(colorButtonClickedForeground)
-      gpu.set(guiID[i].x + guiID[i].width - 3, guiID[i].y + guiID[i].height - 1, "[>]")
-      os.sleep(0.05)
-      gpu.setBackground(colorListBackground)
-      gpu.setForeground(colorListForeground)
-      gpu.set(guiID[i].x + guiID[i].width - 3, guiID[i].y + guiID[i].height - 1, "[>]")
-      guiID[i].func(guiID, i, guiID[i].selected, guiID[i].entries[guiID[i].selected])
-    end
+        if guiID[i].active + guiID[i].height - 2 < #guiID[i].entries + 1 then
+          guiID[i].active = guiID[i].active + guiID[i].height - 2
+          guiID[i].selected = guiID[i].active
+        end
+        gpu.setBackground(colorListActiveBackground)
+        gpu.setForeground(colorListActiveForeground)
+        gpu.set(guiID[i].x + guiID[i].width - 3, guiID[i].y + guiID[i].height - 1, "[>]")
+    --  _displayList(guiID, i)
+        
+        if guiID[i].func then
+          gpu.setBackground(colorButtonClickedBackground)
+          gpu.setForeground(colorButtonClickedForeground)
+          gpu.set(guiID[i].x + guiID[i].width - 3, guiID[i].y + guiID[i].height - 1, "[>]")
+          os.sleep(0.05)
+          gpu.setBackground(colorListBackground)
+          gpu.setForeground(colorListForeground)
+          gpu.set(guiID[i].x + guiID[i].width - 3, guiID[i].y + guiID[i].height - 1, "[>]")
+          guiID[i].func(guiID, i, guiID[i].selected, guiID[i].entries[guiID[i].selected])
+        end
       end
       if x > guiID[i].x - 1 and x < guiID[i].x + guiID[i].width and y > guiID[i].y and y < guiID[i].y + guiID[i].height - 1 then
-    if guiID[i].active + y - guiID[i].y - 1 <= #guiID[i].entries then
-      guiID[i].selected = guiID[i].active + y - guiID[i].y - 1
---    _displayList(guiID, i)
-      
-      if guiID[i].func then
-        guiID[i].func(guiID, i, guiID[i].selected, guiID[i].entries[guiID[i].selected])
-      end
-    end
+        if guiID[i].active + y - guiID[i].y - 1 <= #guiID[i].entries then
+          guiID[i].selected = guiID[i].active + y - guiID[i].y - 1
+    --    _displayList(guiID, i)
+          
+          if guiID[i].func then
+            guiID[i].func(guiID, i, guiID[i].selected, guiID[i].entries[guiID[i].selected])
+          end
+        end
       end
       _displayList(guiID, i)
     elseif guiID[i].type == "chart" and guiID[i].enabled == true then
@@ -1412,14 +1442,14 @@ function gui.runGui(guiID)
     elseif guiID[i].type == "vslider" and guiID[i].enabled == true then
       ix = guiID.x + guiID[i].x
       if x == ix and y == guiID[i].y and guiID[i].value > guiID[i].min then
-    v = guiID[i].value - 1
-    gui.setValue(guiID, i, v)
+        v = guiID[i].value - 1
+        gui.setValue(guiID, i, v)
       elseif x == ix + guiID[i].lenght and y == guiID[i].y and guiID[i].value < guiID[i].max then
-    v = guiID[i].value + 1
-    gui.setValue(guiID, i, v)
+        v = guiID[i].value + 1
+        gui.setValue(guiID, i, v)
       end
       if guiID[i].func then
-    guiID[i].func(guiID, i, guiID[i].value)
+        guiID[i].func(guiID, i, guiID[i].value)
       end
       _displayVslider(guiID, i)
     end
