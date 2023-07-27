@@ -210,44 +210,42 @@ function getListRow(counter, name, id, amount, price)
 end
 
 function getItemList(subtext)
-  updateItemsAmount()
+    updateItemsAmount()
 
-  itemListStrings = {}
-  itemListData = {}
+    itemListStrings = {}
+    itemListData = {}
 
-  local counter = 1
+    local counter = 1
 
-  if subtext and subtext ~= "" then
-    for _, data in ipairs(itemConfig) do
-      local lowtext = string.lower(subtext)
-      if string.find(string.lower(data.uniqueID), lowtext) 
-        or (data.label and string.find(string.lower(data.label), lowtext)) 
-        or string.find(string.lower(data.id), lowtext) 
-        or string.find(unicode.lower(data.name), unicode.lower(subtext))
-      then
-        table.insert(itemListData, data)
+    if subtext and subtext ~= "" then
+        for _, data in ipairs(itemConfig) do
+            local lowtext = string.lower(subtext)
 
-        getListRow(counter, data.name, data.id, data.amount, data.price)
+            if string.find(string.lower(data.uniqueID), lowtext) 
+                or (data.label and string.find(string.lower(data.label), lowtext)) 
+                or string.find(string.lower(data.id), lowtext) 
+                or string.find(unicode.lower(data.name), unicode.lower(subtext))
+            then
+                table.insert(itemListData, data)
 
-        table.insert(itemListStrings, row)
-        counter = counter + 1
-      end
+                local row = getListRow(counter, data.name, data.id, data.amount, data.price)
+
+                table.insert(itemListStrings, row)
+                counter = counter + 1
+            end
+        end
+    else
+        for _, data in ipairs(itemConfig) do
+            table.insert(itemListData, data)
+
+            local row = getListRow(counter, data.name, data.id, data.amount, data.price)
+
+            table.insert(itemListStrings, row)
+            counter = counter + 1
+        end
     end
-  else
-    for _, data in ipairs(itemConfig) do
-      table.insert(itemListData, data)
 
-      local tempid = " (#" .. data.id .. ")"
-      local tempname = " " .. counter .. ". " .. data.name
-      local newname = unicode.wlen(tempname) > (60 - unicode.wlen(tempid)) and (unicode.sub(tempname, 1, 57 - unicode.wlen(tempid)) .. "...") or tempname
-      local row = getNewText(60, 15, 15, newname .. tempid, data.amount .. " шт.", data.price .. "$" )
-
-      table.insert(itemListStrings, row)
-      counter = counter + 1
-    end
-  end
-
-  return itemListStrings
+    return itemListStrings
 end
 
 
@@ -296,11 +294,9 @@ function exitButtonCallback(guiID, id)
 end
 
 function updateList(guiID, listID, subtext)
-  gui.clearList(guiID, list_1_ID)
+    gui.clearList(guiID, list_1_ID)
 
-  for _, value in ipairs(getItemList(subtext)) do
-    gui.insertList(guiID, list_1_ID, value)
-  end
+    gui.tableList(guiID, list_1_ID, getItemList(subtext))
 end
 
 function updateBuyList()

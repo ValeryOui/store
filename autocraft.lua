@@ -26,7 +26,6 @@ end
 
 table.sort(itemConfig, compare)
 
-
 local function getNewText(dist1, dist2, dist3, text1, text2, text3)
     local column3 = text3 .. string.rep(" ", dist3 - unicode.wlen(text3))
     local column2 = text2 .. string.rep(" ", dist2 - unicode.wlen(text2))
@@ -48,16 +47,13 @@ local function getButtonText(text)
 end
 
 local function sS(text, width) -- stringSpacing
+    text = text or ""
     width = width or 38
     local wlen = unicode.wlen(text) or 0
     local margin = math.floor((width - wlen) / 2)
 
     return string.rep(" ", margin) .. text .. string.rep(" ", width - wlen - margin)
 end
-
-
-
-
 
 function getItemData(uniqueID, label, dmg)
     return ae2.getItemsInNetwork({name = uniqueID, label = label or nil, damage = dmg or nil})[1]
@@ -73,7 +69,7 @@ function getItemAmount(uniqueID, label, dmg)
 end
 
 function updateItemsAmount()
-    local getItemsInNetwork = ae2.getItemsInNetwork({name = uniqueID, label = label or nil, damage = dmg or nil})
+    local getItemsInNetwork = ae2.getItemsInNetwork()
     
     for _, data in pairs(itemConfig) do
         for _, networkData in ipairs(getItemsInNetwork) do
@@ -87,22 +83,25 @@ function updateItemsAmount()
     return true
 end
 
-function getListRow(counter, name, id, amount, price)
+function getListRow(counter, name, id, amount, min)
     local tempid = " (#" .. id .. ")"
     local tempname = " " .. counter .. ". " .. name
     local newname = unicode.wlen(tempname) > (60 - unicode.wlen(tempid)) and (unicode.sub(tempname, 1, 57 - unicode.wlen(tempid)) .. "...") or tempname
-    local row = getNewText(60, 15, 15, newname .. tempid, amount .. " шт.", price .. "$" )
+    local row = getNewText(60, 15, 15, newname .. tempid, amount, min)
 
     return row
+end
+
+function updateItemList()
+    updateItemsAmount()
+    updateList(myGui, list_1_ID, myGui[filterentry].text)
 end
 
 function updateList(guiID, listID, subtext)
     gui.clearList(guiID, list_1_ID)
 
     local filteredList = getItemList(subtext)
-    print(#filteredList, #itemListStrings)
-    print(serialization.serialize(filteredList))
-    -- gui.tableList(guiID, list_1_ID, filteredList)
+    gui.tableList(guiID, list_1_ID, filteredList)
 end
 
 function getItemList(subtext)
@@ -124,7 +123,7 @@ function getItemList(subtext)
             then
                 table.insert(itemListData, data)
 
-                getListRow(counter, data.name, data.id, data.amount, data.price)
+                local row = getListRow(counter, data.name, data.id, data.amount, data.minItems or 1)
 
                 table.insert(itemListStrings, row)
                 counter = counter + 1
@@ -134,17 +133,12 @@ function getItemList(subtext)
         for _, data in ipairs(itemConfig) do
             table.insert(itemListData, data)
 
-            local tempid = " (#" .. data.id .. ")"
-            local tempname = " " .. counter .. ". " .. data.name
-            local newname = unicode.wlen(tempname) > (60 - unicode.wlen(tempid)) and (unicode.sub(tempname, 1, 57 - unicode.wlen(tempid)) .. "...") or tempname
-            local row = getNewText(60, 15, 15, newname .. tempid, data.amount .. " шт.", data.price .. "$" )
+            local row = getListRow(counter, data.name, data.id, data.amount, data.minItems or 1)
 
             table.insert(itemListStrings, row)
             counter = counter + 1
         end
     end
-
-    print("counter", counter)
 
     return itemListStrings
 end
@@ -161,8 +155,99 @@ function exitButtonCallback(guiID, id)
     gui.displayGui(myGui)
 end
 
-function craftCallback(guiID, id)
+function showMsg(msg1, msg2, msg3)
+  gui.showMsg(sS(msg1), sS(msg2), sS(msg3))
+end
+
+local activeRequests = {}
+local saveEmptyCpus = 2
+
+local function updateActiveRequests()
+    for _, data in ipairs(activeRequests) do
+        if data.request.IsDone() or data.request.IsCanceled() then
+            table.remove(activeRequests, _)
+        end
+    end
+end
+
+local function getEmptyCpus()
+    local counter = 0
+
+    for _, cpu in ipairs(ae2.getCpus()) do
+        if not cpu.busy then
+            counter = counter + 1
+        end
+    end
+
+    return math.max(counter - saveEmptyCpus, 0)
+end
+
+local function itemHasRequest(uniqueID, dmg)
+    for _, data in ipairs(activeRequests) do
+        if data.uniqueID == uniqueID or data.dmg == dmg then
+            return true
+        end
+    end
+
+    return false
+end
+
+local function findMinItemAmount()
+    for _, data in ipairs(itemConfig) do
+        if not itemHasRequest(data.uniqueID, data.dmg) then
+            local minItems = data.minItems or 1
+        
+            if data.amount < minItems then
+                local craft = ae2.getCraftables({name = data.uniqueID, damage = data.dmg})[1]
+                if not craft then showMsg("Отсутствует крафт", data.name, data.uniqueID .. "#" .. data.id) return false end
     
+                local request = craft.request(minItems - data.amount)
+                
+                if not request.isCanceled() then
+                    local row = data
+                    row.requestquantity = minItems - data.amount
+                    row.request = request
+                    table.insert(activeRequests, row)
+    
+                    return true
+                end
+            end
+        end
+    end
+
+    return false
+end
+
+function craftAllCallback(guiID, id)
+
+    local emptyCpus = getEmptyCpus()
+    if emptyCpus <= 0 then return end
+
+    updateActiveRequests()
+    
+    while emptyCpus > 0 do
+        local res = findMinItemAmount()
+        if res == true then
+            emptyCpus = emptyCpus - 1
+        else
+            return
+        end
+    end
+
+    local items = {}
+    for _, data in ipairs(activeRequests) do
+        table.insert(items, "(x"..data.requestquantity..")"..data.name)
+    end
+
+    local text = "Статус: Cоздание [" .. serialization.serialize(items) .. "]"
+    local text2 = ""
+    if unicode.wlen(text) > 156 then
+        text2 = unicode.sub(157)
+        text = unicode.sub(1, 156)
+    end
+
+    gui.setText(myGui, status, text)
+    gui.setText(myGui, status2, text2)
 end
 
 function craftEntry(guiID, id, text)
@@ -175,18 +260,27 @@ end
 gui.clearScreen()
 gui.setTop("Autocraft system")
 
-myGui = gui.newGui(2, 2, 158, 48, true)                                                                       -- Главная менюшка
-welcomeLabel = gui.newLabel(myGui, 2, 1, "") -- Строка приветствия
-  
+myGui = gui.newGui(2, 2, 158, 48, true)    
+status = gui.newLabel(myGui, 2, 1, "Статус:")
+status2 = gui.newLabel(myGui, 2, 2, "")
+
 filter = gui.newLabel(myGui, 2, 3, "Фильтр:")
 filterentry = gui.newText(myGui, 9, 3, 30, "", updateList)
-list_1_ID = gui.newList(myGui, 2, 5, 94, 42, getItemList(), itemListCallback, "                         Название                         |  В наличии   |   Цена за 1шт.  ")
+list_1_ID = gui.newList(myGui, 2, 5, 94, 42, getItemList(), itemListCallback, sS("Название", 60) .. "|" .. sS("В наличии", 15) .. "|" .. sS("Должно быть", 15))
 buyLabel = gui.newLabel(myGui, 98, 6, "Количество предметов:")
 buyEntry1 = gui.newText(myGui, 98, 8, 10, "1", craftEntry)
 
-buySuccess_up = gui.newButton(myGui, 98, 12, getButtonText(""), craftCallback)
-buySuccess = gui.newButton(myGui, 98, 13, getButtonText("Заказать"), craftCallback)
-buySuccess_down = gui.newButton(myGui, 98, 14, getButtonText(""), craftCallback)
+craftSuccess_up = gui.newButton(myGui, 98, 12, getButtonText(""), craftCallback)
+craftSuccess = gui.newButton(myGui, 98, 13, getButtonText("Заказать"), craftCallback)
+craftSuccess_down = gui.newButton(myGui, 98, 14, getButtonText(""), craftCallback)
+
+craftAllSuccess_up = gui.newButton(myGui, 98, 16, getButtonText(""), craftAllCallback)
+craftAllSuccess = gui.newButton(myGui, 98, 17, getButtonText("Проверка кол-ва"), craftAllCallback)
+craftAllSuccess_down = gui.newButton(myGui, 98, 18, getButtonText(""), craftAllCallback)
+
+updateListButton_up = gui.newButton(myGui, 98, 20, getButtonText(""), updateItemList)
+updateListButton = gui.newButton(myGui, 98, 21, getButtonText("Обновить список"), updateItemList)
+updateListButton_down = gui.newButton(myGui, 98, 22, getButtonText(""), updateItemList)
 
 backbutton_up = gui.newButton(myGui, 138, 44, getButtonText(""), exitButtonCallback)          
 backbutton = gui.newButton(myGui, 138, 45, getButtonText("Выход"), exitButtonCallback)                          
