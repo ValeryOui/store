@@ -244,7 +244,7 @@ local items = {
 	{uniqueID = "appliedenergistics2:tile.BlockInterface", id = "411", name = "МЭ интерфейс", price = 0.98},
 	{uniqueID = "dwcity:blockUltimateInterface", id = "2135", name = "Совершенный МЭ интерфейс", price = 17},
 	{uniqueID = "dwcity:blockHybridInterface", id = "2027", name = "Гибридный МЭ интерфейс", price = 5.6},
-	{uniqueID = "dwcity:blockAdvancedUnterface", id = "1982", name = "Улучшенный МЭ интерфейс", price = 2.56},
+	{uniqueID = "dwcity:blockAdvancedInterface", id = "1982", name = "Улучшенный МЭ интерфейс", price = 2.56},
 	{uniqueID = "dwcity:blockAdvancedInterfaceDeliver", id = "2275", name = "Улучшенный МЭ интерфейс поставки", price = 3.1},
 	{uniqueID = "dwcity:blockHybridInterfaceDeliver", id = "2274", name = "Гибридный МЭ интерфейс поставки", price = 9},
 	{uniqueID = "dwcity:blockUltimateInterfaceDeliver", id = "2273", name = "Совершенный МЭ интерфейс поставки", price = 29},
