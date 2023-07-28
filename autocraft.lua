@@ -17,18 +17,18 @@ local gui = require("library/gui")
 
 
 -- changed config
-    local changedconfig = "/changedconfig.txt"   
+    local changedConfigPath = "/changedconfig.txt"   
     changedItemConfig = {}
 
     function loadChangedItems() 
-        local file = io.open(changedconfig, "r") 
+        local file = io.open(changedConfigPath, "r") 
         if file then
             changedItemConfig = serialization.unserialize(file:read("*a")) or {}
             file:close()
         end
     end
     function saveChangedItems() 
-        local file = io.open(name, "w")
+        local file = io.open(changedConfigPath, "w")
         file:write(serialization.serialize(changedItemConfig))
         file:close()
     end
