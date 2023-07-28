@@ -83,7 +83,7 @@ local gui = require("library/gui")
 
     function removeChangedItem(uniqueID, name, dmg, min)
         for _, row in ipairs(changedItemConfig) do
-            if row.name == name and row.dmg == dmg and then 
+            if row.name == name and row.dmg == dmg then 
                 table.remove(changedItemConfig, _)
                 saveFile() 
 
