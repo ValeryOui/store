@@ -16,12 +16,98 @@ local image = require("library/image")
 local gui = require("library/gui")
 
 
+-- changed config
+    local changedconfig = "/changedconfig.txt"   
+    changedItemConfig = {}
+
+    function loadFile() 
+        local file = io.open(changedconfig, "r") 
+        if file then
+            changedItemConfig = serialization.unserialize(file:read("*a")) or {}
+            file:close()
+        end
+    end
+    function saveFile() 
+        local file = io.open(name, "w")
+        file:write(serialization.serialize(changedItemConfig))
+        file:close()
+    end
+
+    loadFile() 
+    for _, row in ipairs(changedItemConfig) do
+        row.isChanged = true
+        table.insert(itemConfig, row)
+    end
+
+    function isItemHasInConfig(uniqueID, dmg)
+        for _, row in ipairs(changedItemConfig) do
+           if row.uniqueID == uniqueID and row.dmg == dmg then return true end
+        end
+
+        return false
+    end
+
+    function changeChangedItem(uniqueID, name, dmg, min)
+        for _, row in ipairs(changedItemConfig) do
+            if row.uniqueID == uniqueID and row.dmg == dmg then 
+                row.minItems = min
+                saveFile() 
+
+                for _, row in ipairs(itemConfig) do
+                    if row.uniqueID == uniqueID and row.dmg == dmg then
+                        row.minItems = min
+                        break
+                    end
+                end
+
+                return true 
+            end
+        end
+    end
+
+    function addChangedItem(uniqueID, name, dmg, min)
+        local craft = ae2.getCraftables({name = uniqueID, damage = dmg})[1]
+        if not craft then showMsg("Отсутствует крафт", uniqueID, name .. " " .. dmg) return false end
+
+        if isItemHasInConfig(uniqueID, dmg) then
+            changeChangedItem(uniqueID, dmg, min)
+
+            return false 
+        end
+
+        local row = {uniqueID = uniqueID, id = "xxxx:"..dmg, name = name, isChanged == true, minItems = min}
+        table.Add(changedItemConfig, row)
+        table.Add(itemConfig, row)
+        saveFile() 
+    end
+
+    function removeChangedItem(uniqueID, name, dmg, min)
+        for _, row in ipairs(changedItemConfig) do
+            if row.name == name and row.dmg == dmg and then 
+                table.remove(changedItemConfig, _)
+                saveFile() 
+
+                for _, row in ipairs(itemConfig) do
+                    if row.name == name and row.dmg == dmg then
+                        table.remove(itemConfig, _)
+                    end
+                end
+
+                return true 
+            end
+        end
+    end
+--
+
 local itemListChoose = {}
 local itemListStrings = {}
 local itemListData = {}
 local delay = 3
 local lastrequest = 0
 local autoRefreshIsActice = false
+
+
+
 
 local function compare(a,b)
     return a.name < b.name
@@ -306,6 +392,36 @@ function autoRefreshCallback(guiID, id)
     end
 end
 
+local function _valid()
+    local temp = {"uniqueID", "Название", "Damage ID", "Минималка"}
+
+    for key, value in ipairs(chIEntry1, chIEntry2, chIEntry3, chIEntry4) do
+        if not gui[value].text or gui[value].text == "" then
+            showMsg("Поле N" .. key .. " - " .. temp[key] .. " пустое", msg2, msg3)
+
+            return false
+        end
+    end
+
+    return true
+end
+
+function addChangedItemCallback(gui, id)
+    if not _valid() then return end
+
+    local uniqueID, name, dmg, min = gui[chIEntry1].text, gui[chIEntry2].text, gui[chIEntry3].text, gui[chIEntry4].text 
+    addChangedItem(uniqueID, name, dmg, min)
+    updateItemList()
+end
+
+function removeChangedItemCallback(gui, id)
+    if not _valid() then return end
+
+    local uniqueID, name, dmg, min = gui[chIEntry1].text, gui[chIEntry2].text, gui[chIEntry3].text, gui[chIEntry4].text 
+    removeChangedItem(uniqueID, name, dmg, min)
+    updateItemList()
+end
+
 gui.clearScreen()
 gui.setTop("Autocraft system")
 
@@ -315,7 +431,7 @@ status2 = gui.newLabel(myGui, 2, 2, "")
 
 filter = gui.newLabel(myGui, 2, 3, "Фильтр:")
 filterentry = gui.newText(myGui, 9, 3, 30, "", updateList)
-list_1_ID = gui.newList(myGui, 2, 5, 94, 42, getItemList(), itemListCallback, sS("Название", 60) .. "|" .. sS("В наличии", 15) .. "|" .. sS("Должно быть", 15))
+list_1_ID = gui.newList(myGui, 2, 5, 94, 42, getItemList(), itemListCallback, sS("Название", 59) .. "|" .. sS("В наличии", 14) .. "|" .. sS("Должно быть", 17))
 buyLabel = gui.newLabel(myGui, 98, 6, "Количество предметов:")
 buyEntry1 = gui.newText(myGui, 98, 8, 10, "1", craftEntry)
 
@@ -330,6 +446,14 @@ craftAllSuccess_down = gui.newButton(myGui, 98, 18, getButtonText(""), craftAllC
 updateListButton_up = gui.newButton(myGui, 98, 20, getButtonText(""), updateItemList)
 updateListButton = gui.newButton(myGui, 98, 21, getButtonText("Обновить список"), updateItemList)
 updateListButton_down = gui.newButton(myGui, 98, 22, getButtonText(""), updateItemList)
+
+addChangedItemButton = gui.newButton(myGui, 98, 24, getButtonText("Добавить предмет"), addChangedItemCallback)
+removeChangedItemButton = gui.newButton(myGui, 98, 25, getButtonText("Удалить предмет"), removeChangedItemCallback)
+
+chIEntry1 = gui.newText(myGui, 98, 26, 40, "uniqueID")
+chIEntry2 = gui.newText(myGui, 98, 27, 40, "Название")
+chIEntry3 = gui.newText(myGui, 98, 28, 40, "Damage ID")
+chIEntry4 = gui.newText(myGui, 98, 29, 40, "Минималка")
 
 autoRefreshLabel = gui.newLabel(myGui, 98, 24, "Автообновление: [выключено]")
 
