@@ -224,7 +224,7 @@ function getItemList(subtext)
             then
                 table.insert(itemListData, data)
 
-                local row = getListRow(counter, data.name .. " " .. (data.label or ""), data.id, data.amount, data.minItems or 1)
+                local row = getListRow(counter, data.name, data.id, data.amount, data.minItems or 1)
 
                 table.insert(itemListStrings, row)
                 counter = counter + 1
@@ -234,7 +234,7 @@ function getItemList(subtext)
         for _, data in ipairs(itemConfig) do
             table.insert(itemListData, data)
 
-            local row = getListRow(counter, data.name .. " " .. (data.label or ""), data.id, data.amount, data.minItems or 1)
+            local row = getListRow(counter, data.name, data.id, data.amount, data.minItems or 1)
 
             table.insert(itemListStrings, row)
             counter = counter + 1
