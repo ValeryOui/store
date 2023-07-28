@@ -433,7 +433,7 @@ status2 = gui.newLabel(myGui, 2, 2, "")
 
 filter = gui.newLabel(myGui, 2, 3, "Фильтр:")
 filterentry = gui.newText(myGui, 9, 3, 30, "", updateList)
-list_1_ID = gui.newList(myGui, 2, 5, 94, 42, getItemList(), itemListCallback, sS("Название", 59) .. "|" .. sS("В наличии", 14) .. "|" .. sS("Должно быть", 17))
+list_1_ID = gui.newList(myGui, 2, 5, 94, 42, getItemList(), itemListCallback, sS("Название", 58) .. "|" .. sS("В наличии", 14) .. "|" .. sS("Должно быть", 17))
 buyLabel = gui.newLabel(myGui, 98, 6, "Количество предметов:")
 buyEntry1 = gui.newText(myGui, 98, 8, 10, "1", craftEntry)
 
