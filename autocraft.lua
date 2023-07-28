@@ -394,9 +394,9 @@ end
 
 local function _valid()
     local temp = {"uniqueID", "Название", "Damage ID", "Минималка"}
-
+    
     for key, value in ipairs({chIEntry1, chIEntry2, chIEntry3, chIEntry4}) do
-        if not gui[value].text or gui[value].text == "" then
+        if not myGui[value].text or myGui[value].text == "" then
             showMsg("Поле N" .. key .. " - " .. temp[key] .. " пустое", msg2, msg3)
 
             return false
