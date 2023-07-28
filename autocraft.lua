@@ -76,8 +76,8 @@ local gui = require("library/gui")
         end
 
         local row = {uniqueID = uniqueID, id = "xxxx:"..dmg, name = name, isChanged == true, minItems = min}
-        table.Add(changedItemConfig, row)
-        table.Add(itemConfig, row)
+        table.insert(changedItemConfig, row)
+        table.insert(itemConfig, row)
         saveFile() 
     end
 
