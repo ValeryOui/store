@@ -116,9 +116,9 @@ end
 table.sort(itemConfig, compare)
 
 local function getNewText(dist1, dist2, dist3, text1, text2, text3)
-    local column3 = text3 .. string.rep(" ", dist3 - unicode.wlen(text3))
-    local column2 = text2 .. string.rep(" ", dist2 - unicode.wlen(text2))
-    local column1 = text1 .. string.rep(" ", dist1 - unicode.wlen(text1))
+    local column3 = text3 .. string.rep(" ", dist3 - unicode.wlen(text3 or ""))
+    local column2 = text2 .. string.rep(" ", dist2 - unicode.wlen(text2 or ""))
+    local column1 = text1 .. string.rep(" ", dist1 - unicode.wlen(text1 or ""))
 
     return column1 .. column2 .. column3
 end
