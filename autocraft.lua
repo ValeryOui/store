@@ -447,19 +447,19 @@ updateListButton_up = gui.newButton(myGui, 98, 20, getButtonText(""), updateItem
 updateListButton = gui.newButton(myGui, 98, 21, getButtonText("Обновить список"), updateItemList)
 updateListButton_down = gui.newButton(myGui, 98, 22, getButtonText(""), updateItemList)
 
-addChangedItemButton = gui.newButton(myGui, 98, 24, getButtonText("Добавить предмет"), addChangedItemCallback)
-removeChangedItemButton = gui.newButton(myGui, 98, 25, getButtonText("Удалить предмет"), removeChangedItemCallback)
-
-chIEntry1 = gui.newText(myGui, 98, 26, 40, "uniqueID")
-chIEntry2 = gui.newText(myGui, 98, 27, 40, "Название")
-chIEntry3 = gui.newText(myGui, 98, 28, 40, "Damage ID")
-chIEntry4 = gui.newText(myGui, 98, 29, 40, "Минималка")
-
 autoRefreshLabel = gui.newLabel(myGui, 98, 24, "Автообновление: [выключено]")
 
 autoRefreshButton_up = gui.newButton(myGui, 98, 26, getButtonText("", 25), autoRefreshCallback)
 autoRefreshButton = gui.newButton(myGui, 98, 27, getButtonText("Вкл/выкл автообновление", 25), autoRefreshCallback)
 autoRefreshButton_down = gui.newButton(myGui, 98, 28, getButtonText("", 25), autoRefreshCallback)
+
+addChangedItemButton = gui.newButton(myGui, 98, 30, getButtonText("Добавить предмет"), addChangedItemCallback)
+removeChangedItemButton = gui.newButton(myGui, 98, 31, getButtonText("Удалить предмет"), removeChangedItemCallback)
+
+chIEntry1 = gui.newText(myGui, 98, 33, 40, "uniqueID")
+chIEntry2 = gui.newText(myGui, 98, 34, 40, "Название")
+chIEntry3 = gui.newText(myGui, 98, 35, 40, "Damage ID")
+chIEntry4 = gui.newText(myGui, 98, 36, 40, "Минималка")
 
 backbutton_up = gui.newButton(myGui, 138, 44, getButtonText(""), exitButtonCallback)          
 backbutton = gui.newButton(myGui, 138, 45, getButtonText("Выход"), exitButtonCallback)                          
