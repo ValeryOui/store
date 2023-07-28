@@ -456,17 +456,17 @@ autoRefreshButton = gui.newButton(myGui, 98, 27, getButtonText("Вкл/выкл 
 autoRefreshButton_down = gui.newButton(myGui, 98, 28, getButtonText("", 25), autoRefreshCallback)
 
 addChangedItemButton = gui.newButton(myGui, 98, 30, getButtonText("Добавить предмет"), addChangedItemCallback)
-removeChangedItemButton = gui.newButton(myGui, 98, 31, getButtonText("Удалить предмет"), removeChangedItemCallback)
+removeChangedItemButton = gui.newButton(myGui, 115, 30, getButtonText("Удалить предмет"), removeChangedItemCallback)
 
-chILabel1 = gui.newLabel(myGui, 98, 33, "uniqueID")
-chILabel2 = gui.newLabel(myGui, 98, 34, "Название")
-chILabel3 = gui.newLabel(myGui, 98, 35, "Damage ID")
-chILabel4 = gui.newLabel(myGui, 98, 36, "Минималка")
+chILabel1 = gui.newLabel(myGui, 98, 32, "uniqueID")
+chILabel2 = gui.newLabel(myGui, 98, 33, "Название")
+chILabel3 = gui.newLabel(myGui, 98, 34, "Damage ID")
+chILabel4 = gui.newLabel(myGui, 98, 35, "Минималка")
 
-chIEntry1 = gui.newText(myGui, 98, 43, 40, "")
-chIEntry2 = gui.newText(myGui, 98, 43, 40, "")
-chIEntry3 = gui.newText(myGui, 98, 43, 40, "")
-chIEntry4 = gui.newText(myGui, 98, 43, 40, "")
+chIEntry1 = gui.newText(myGui, 108, 32, 40, "")
+chIEntry2 = gui.newText(myGui, 108, 33, 40, "")
+chIEntry3 = gui.newText(myGui, 108, 34, 40, "")
+chIEntry4 = gui.newText(myGui, 108, 35, 40, "")
 
 backbutton_up = gui.newButton(myGui, 138, 44, getButtonText(""), exitButtonCallback)          
 backbutton = gui.newButton(myGui, 138, 45, getButtonText("Выход"), exitButtonCallback)                          
