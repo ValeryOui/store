@@ -179,6 +179,8 @@ function updateItemsAmount()
         end
     end
 
+    os.sleep(0.01)
+
     return true
 end
 
@@ -407,7 +409,7 @@ local function _valid()
 end
 
 function addChangedItemCallback(gui, id)
-    if _valid() == false then return end
+    if not _valid() then return end
 
     local uniqueID, name, dmg, min = gui[chIEntry1].text, gui[chIEntry2].text, gui[chIEntry3].text, gui[chIEntry4].text 
     addChangedItem(uniqueID, name, dmg, min)
@@ -415,7 +417,7 @@ function addChangedItemCallback(gui, id)
 end
 
 function removeChangedItemCallback(gui, id)
-    if _valid() == false then return end
+    if not _valid() == false then return end
 
     local uniqueID, name, dmg, min = gui[chIEntry1].text, gui[chIEntry2].text, gui[chIEntry3].text, gui[chIEntry4].text 
     removeChangedItem(uniqueID, name, dmg, min)
