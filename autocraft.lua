@@ -20,20 +20,20 @@ local gui = require("library/gui")
     local changedconfig = "/changedconfig.txt"   
     changedItemConfig = {}
 
-    function loadFile() 
+    function loadChangedItems() 
         local file = io.open(changedconfig, "r") 
         if file then
             changedItemConfig = serialization.unserialize(file:read("*a")) or {}
             file:close()
         end
     end
-    function saveFile() 
+    function saveChangedItems() 
         local file = io.open(name, "w")
         file:write(serialization.serialize(changedItemConfig))
         file:close()
     end
 
-    loadFile() 
+    loadChangedItems() 
     for _, row in ipairs(changedItemConfig) do
         row.isChanged = true
         table.insert(itemConfig, row)
@@ -51,7 +51,7 @@ local gui = require("library/gui")
         for _, row in ipairs(changedItemConfig) do
             if row.uniqueID == uniqueID and row.dmg == dmg then 
                 row.minItems = min
-                saveFile() 
+                saveChangedItems() 
 
                 for _, row in ipairs(itemConfig) do
                     if row.uniqueID == uniqueID and row.dmg == dmg then
@@ -78,14 +78,14 @@ local gui = require("library/gui")
         local row = {uniqueID = uniqueID, id = "xxxx:"..dmg, name = name, isChanged == true, minItems = min}
         table.insert(changedItemConfig, row)
         table.insert(itemConfig, row)
-        saveFile() 
+        saveChangedItems() 
     end
 
     function removeChangedItem(uniqueID, name, dmg, min)
         for _, row in ipairs(changedItemConfig) do
             if row.name == name and row.dmg == dmg then 
                 table.remove(changedItemConfig, _)
-                saveFile() 
+                saveChangedItems() 
 
                 for _, row in ipairs(itemConfig) do
                     if row.name == name and row.dmg == dmg then
