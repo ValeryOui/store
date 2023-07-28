@@ -48,7 +48,7 @@ local logsPath = "/logs.txt"
 local depositListStrings, depositListData, itemListStrings, itemListData, pages = {}, {}, {}, {}, {}
 local depositListChoose, buyListChoose, curPage = 1, 1, 1
 
-local prgName = "Store v1.0 by LIMI_np"
+local prgName = "Store v1.0 by LIMI_np & gh0st040"
 
 ------------ Database ------------------------------------
 
@@ -344,7 +344,7 @@ function calculateDepositEntry1(guiID, id, text)
 
   local result = math.floor(tonumber(text) / depositListData[depositListChoose].price)
   gui.setText(guiID, depositEntry1, result)
-  
+
   gui.setText(guiID, depositEntry2, result * depositListData[depositListChoose].price)
 end
 
