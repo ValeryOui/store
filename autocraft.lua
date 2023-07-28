@@ -394,7 +394,7 @@ end
 
 local function _valid()
     local temp = {"uniqueID", "Название", "Damage ID", "Минималка"}
-    
+
     for key, value in ipairs({chIEntry1, chIEntry2, chIEntry3, chIEntry4}) do
         if not myGui[value].text or myGui[value].text == "" then
             showMsg("Поле N" .. key .. " - " .. temp[key] .. " пустое", msg2, msg3)
@@ -407,7 +407,7 @@ local function _valid()
 end
 
 function addChangedItemCallback(gui, id)
-    if not _valid() then return end
+    if _valid() == false then return end
 
     local uniqueID, name, dmg, min = gui[chIEntry1].text, gui[chIEntry2].text, gui[chIEntry3].text, gui[chIEntry4].text 
     addChangedItem(uniqueID, name, dmg, min)
@@ -415,7 +415,7 @@ function addChangedItemCallback(gui, id)
 end
 
 function removeChangedItemCallback(gui, id)
-    if not _valid() then return end
+    if _valid() == false then return end
 
     local uniqueID, name, dmg, min = gui[chIEntry1].text, gui[chIEntry2].text, gui[chIEntry3].text, gui[chIEntry4].text 
     removeChangedItem(uniqueID, name, dmg, min)
