@@ -116,9 +116,9 @@ end
 table.sort(itemConfig, compare)
 
 local function getNewText(dist1, dist2, dist3, text1, text2, text3)
-    local column3 = text3 .. string.rep(" ", dist3 - unicode.wlen(text3 or ""))
-    local column2 = text2 .. string.rep(" ", dist2 - unicode.wlen(text2 or ""))
-    local column1 = text1 .. string.rep(" ", dist1 - unicode.wlen(text1 or ""))
+    local column3 = (text3 or "") .. string.rep(" ", dist3 - unicode.wlen(text3 or ""))
+    local column2 = (text2 or "") .. string.rep(" ", dist2 - unicode.wlen(text2 or ""))
+    local column1 = (text1 or "") .. string.rep(" ", dist1 - unicode.wlen(text1 or ""))
 
     return column1 .. column2 .. column3
 end
@@ -458,10 +458,15 @@ autoRefreshButton_down = gui.newButton(myGui, 98, 28, getButtonText("", 25), aut
 addChangedItemButton = gui.newButton(myGui, 98, 30, getButtonText("Добавить предмет"), addChangedItemCallback)
 removeChangedItemButton = gui.newButton(myGui, 98, 31, getButtonText("Удалить предмет"), removeChangedItemCallback)
 
-chIEntry1 = gui.newText(myGui, 98, 33, 40, "uniqueID")
-chIEntry2 = gui.newText(myGui, 98, 34, 40, "Название")
-chIEntry3 = gui.newText(myGui, 98, 35, 40, "Damage ID")
-chIEntry4 = gui.newText(myGui, 98, 36, 40, "Минималка")
+chILabel1 = gui.newLabel(myGui, 98, 33, "uniqueID")
+chILabel2 = gui.newLabel(myGui, 98, 34, "Название")
+chILabel3 = gui.newLabel(myGui, 98, 35, "Damage ID")
+chILabel4 = gui.newLabel(myGui, 98, 36, "Минималка")
+
+chIEntry1 = gui.newText(myGui, 98, 43, 40, "")
+chIEntry2 = gui.newText(myGui, 98, 43, 40, "")
+chIEntry3 = gui.newText(myGui, 98, 43, 40, "")
+chIEntry4 = gui.newText(myGui, 98, 43, 40, "")
 
 backbutton_up = gui.newButton(myGui, 138, 44, getButtonText(""), exitButtonCallback)          
 backbutton = gui.newButton(myGui, 138, 45, getButtonText("Выход"), exitButtonCallback)                          
