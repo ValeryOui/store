@@ -56,7 +56,7 @@ local gui = require("library/gui")
             for _, row in ipairs(changedItemConfig) do
                 if row.uniqueID == uniqueID and row.dmg == dmg then 
                     row.minItems = min
-                    row.name = name
+                    row.name = "(NT) "..namename
                     saveChangedItems() 
     
                     for _, row in ipairs(itemConfig) do
@@ -78,15 +78,15 @@ local gui = require("library/gui")
         local craft = ae2.getCraftables({name = uniqueID, damage = dmg})[1]
         if not craft then showMsg("Отсутствует крафт", uniqueID, name .. " " .. dmg) return false end
 
-        local _, dmg = string.match(id, "(%d+):(%d+)")
         print(uniqueID, dmg, changedItemConfig, isItemHasInConfig(uniqueID, dmg, changedItemConfig))
+        dmg = dmg and tonumber(dmg) or 0
         if isItemHasInConfig(uniqueID, dmg, changedItemConfig) then
             changeChangedItem(uniqueID, dmg, min)
 
             return true
         end
 
-        local row = {uniqueID = uniqueID, id = id, dmg = dmg and tonumber(dmg) or 0, name = "(NT) "..name, isChanged == true, minItems = min}
+        local row = {uniqueID = uniqueID, id = id, dmg = dmg or 0, name = "(NT) "..name, isChanged == true, minItems = min}
         table.insert(changedItemConfig, row)
         table.insert(itemConfig, row)
         saveChangedItems() 
