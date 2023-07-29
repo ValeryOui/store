@@ -123,7 +123,7 @@ function changeChangedItem(uniqueID, name, dmg, min)
         for _, row in ipairs(changedItemConfig) do
             if row.uniqueID == uniqueID and row.dmg == dmg then 
                 row.minItems = min
-                row.name = "(NT) "..namename
+                row.name = "(NT) "..name
                 saveChangedItems() 
 
                 for _, row in ipairs(itemConfig) do
