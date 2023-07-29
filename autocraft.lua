@@ -77,7 +77,7 @@ local gui = require("library/gui")
         end
 
         local _, dmg = string.match(id, "(%d+):(%d+)")
-        local row = {uniqueID = uniqueID, id = id, dmg = dmg and tonumber(dmg) or 0, name = name, isChanged == true, minItems = min}
+        local row = {uniqueID = uniqueID, id = id, dmg = dmg and tonumber(dmg) or 0, name = "(NT) "..name, isChanged == true, minItems = min}
         table.insert(changedItemConfig, row)
         table.insert(itemConfig, row)
         saveChangedItems() 
@@ -300,7 +300,7 @@ end
 local function findMinItemAmount()
     for _, data in ipairs(itemConfig) do
         if not itemHasRequest(data.uniqueID, data.dmg) then
-            local minItems = data.minItems or 1
+            local minItems = data.minItems and tonumber(data.minItems) or 1
         
             if data.amount < minItems then
                 local craft = ae2.getCraftables({name = data.uniqueID, damage = data.dmg})[1]
