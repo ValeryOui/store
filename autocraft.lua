@@ -156,6 +156,7 @@ function addChangedItem(uniqueID, name, id, min)
     table.insert(changedItemConfig, row)
     table.insert(itemConfig, row)
     saveChangedItems() 
+    table.sort(itemConfig, compare)
 
     return true
 end
