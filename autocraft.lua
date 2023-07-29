@@ -121,7 +121,7 @@ function changeChangedItem(uniqueID, name, dmg, min)
     local result = gui.getYesNo(sS("Предмет уже существует"), sS("Обновить название и минималку?"), sS(""))
     if result == true then
         for _, row in ipairs(changedItemConfig) do
-            if row.uniqueID == uniqueID and row.dmg == dmg then 
+            if row.uniqueID == uniqueID and row.dmg == dmg then
                 row.minItems = min
                 row.name = "(NT) "..name
                 saveChangedItems() 
@@ -281,11 +281,11 @@ local function updateActiveRequests()
     for _, data in ipairs(activeRequests) do
         if data.request.isDone() or data.request.isCanceled() then
             table.remove(activeRequests, _)
+            updateItemList()
         end
     end
 
     statusUpdateText()
-    updateItemsAmount()
 end
 
 local function getEmptyCpus()
