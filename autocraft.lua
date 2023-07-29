@@ -29,12 +29,13 @@ local gui = require("library/gui")
     end
     function saveChangedItems() 
         local file = io.open(changedConfigPath, "w")
-        file:write(serialization.serialize(changedItemConfig))
+        file:write({})--erialization.serialize(changedItemConfig))
         file:close()
     end
 
     loadChangedItems() 
     for _, row in ipairs(changedItemConfig) do
+        row.name = "(NT) "..row.name
         row.isChanged = true
         table.insert(itemConfig, row)
     end
