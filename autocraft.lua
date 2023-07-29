@@ -147,7 +147,7 @@ function addChangedItem(uniqueID, name, id, min)
 
     dmg = dmg and tonumber(dmg) or 0
     if isItemHasInConfig(uniqueID, dmg, changedItemConfig) then
-        changeChangedItem(uniqueID, dmg, min)
+        changeChangedItem(uniqueID, name, dmg, min)
 
         return true
     end
