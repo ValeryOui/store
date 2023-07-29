@@ -34,7 +34,7 @@ local gui = require("library/gui")
     end
 
     function isItemHasInConfig(uniqueID, dmg, tbl)
-        for _, row in ipairs(tbl or changedItemConfig) do
+        for _, row in ipairs(tbl) do
            if row.uniqueID == uniqueID and row.dmg == dmg then return true end
         end
 
@@ -51,34 +51,40 @@ local gui = require("library/gui")
     end
 
     function changeChangedItem(uniqueID, name, dmg, min)
-        for _, row in ipairs(changedItemConfig) do
-            if row.uniqueID == uniqueID and row.dmg == dmg then 
-                row.minItems = min
-                saveChangedItems() 
-
-                for _, row in ipairs(itemConfig) do
-                    if row.uniqueID == uniqueID and row.dmg == dmg then
-                        row.minItems = min
-                        break
+        local result = gui.getYesNo(sS("Предмет уже существует"), sS("Обновить название и минималку?"), sS(""))
+        if result == true then
+            for _, row in ipairs(changedItemConfig) do
+                if row.uniqueID == uniqueID and row.dmg == dmg then 
+                    row.minItems = min
+                    row.name = name
+                    saveChangedItems() 
+    
+                    for _, row in ipairs(itemConfig) do
+                        if row.uniqueID == uniqueID and row.dmg == dmg then
+                            row.minItems = min
+                            row.name = name
+                            break
+                        end
                     end
+    
+                    return true 
                 end
-
-                return true 
             end
         end
+        gui.displayGui(myGui)
     end
 
     function addChangedItem(uniqueID, name, id, min)
         local craft = ae2.getCraftables({name = uniqueID, damage = dmg})[1]
         if not craft then showMsg("Отсутствует крафт", uniqueID, name .. " " .. dmg) return false end
 
-        if isItemHasInConfig(uniqueID, dmg) then
+        local _, dmg = string.match(id, "(%d+):(%d+)")
+        if isItemHasInConfig(uniqueID, dmg, changedItemConfig) then
             changeChangedItem(uniqueID, dmg, min)
 
             return true
         end
 
-        local _, dmg = string.match(id, "(%d+):(%d+)")
         local row = {uniqueID = uniqueID, id = id, dmg = dmg and tonumber(dmg) or 0, name = "(NT) "..name, isChanged == true, minItems = min}
         table.insert(changedItemConfig, row)
         table.insert(itemConfig, row)
