@@ -66,7 +66,7 @@ local gui = require("library/gui")
         end
     end
 
-    function addChangedItem(uniqueID, name, dmg, min)
+    function addChangedItem(uniqueID, name, id, min)
         local craft = ae2.getCraftables({name = uniqueID, damage = dmg})[1]
         if not craft then showMsg("Отсутствует крафт", uniqueID, name .. " " .. dmg) return false end
 
@@ -76,7 +76,8 @@ local gui = require("library/gui")
             return false 
         end
 
-        local row = {uniqueID = uniqueID, dmg = dmg, name = name, isChanged == true, minItems = min}
+        local _, dmg = string.match(id, "(%d+):(%d+)")
+        local row = {uniqueID = uniqueID, id = id, dmg = dmg and tonumber(dmg) or 0, name = name, isChanged == true, minItems = min}
         table.insert(changedItemConfig, row)
         table.insert(itemConfig, row)
         saveChangedItems() 
@@ -397,7 +398,7 @@ function autoRefreshCallback(guiID, id)
 end
 
 local function _valid()
-    local temp = {"uniqueID", "Название", "Damage ID", "Минималка"}
+    local temp = {"uniqueID", "Название", "Full ID", "Минималка"}
 
     for key, value in ipairs({chIEntry1, chIEntry2, chIEntry3, chIEntry4}) do
         if not myGui[value].text or myGui[value].text == "" then
@@ -462,7 +463,7 @@ removeChangedItemButton = gui.newButton(myGui, 117, 30, getButtonText("Удал�
 
 chILabel1 = gui.newLabel(myGui, 98, 32, "uniqueID")
 chILabel2 = gui.newLabel(myGui, 98, 33, "Название")
-chILabel3 = gui.newLabel(myGui, 98, 34, "Damage ID")
+chILabel3 = gui.newLabel(myGui, 98, 34, "Full ID")
 chILabel4 = gui.newLabel(myGui, 98, 35, "Минималка")
 
 chIEntry1 = gui.newText(myGui, 108, 32, 40, "")
