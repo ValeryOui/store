@@ -75,7 +75,7 @@ local gui = require("library/gui")
             return false 
         end
 
-        local row = {uniqueID = uniqueID, id = "xxxx:"..dmg, name = name, isChanged == true, minItems = min}
+        local row = {uniqueID = uniqueID, id = dmg, name = name, isChanged == true, minItems = min}
         table.insert(changedItemConfig, row)
         table.insert(itemConfig, row)
         saveChangedItems() 
@@ -306,7 +306,8 @@ local function findMinItemAmount()
     
                 local request = craft.request(minItems - data.amount)
                 
-                if not request.isCanceled() then
+                local result, reason = request.isCanceled()
+                if not result then
                     local row = data
                     row.requestquantity = minItems - data.amount
                     row.request = request
