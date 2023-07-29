@@ -73,7 +73,7 @@ local gui = require("library/gui")
         if isItemHasInConfig(uniqueID, dmg) then
             changeChangedItem(uniqueID, dmg, min)
 
-            return false 
+            return true
         end
 
         local _, dmg = string.match(id, "(%d+):(%d+)")
@@ -81,6 +81,8 @@ local gui = require("library/gui")
         table.insert(changedItemConfig, row)
         table.insert(itemConfig, row)
         saveChangedItems() 
+
+        return true
     end
 
     function removeChangedItem(uniqueID, dmg)
@@ -98,6 +100,8 @@ local gui = require("library/gui")
                 return true 
             end
         end
+
+        return false
     end
 --
 
@@ -417,6 +421,7 @@ function addChangedItemCallback(gui, id)
     local uniqueID, name, dmg, min = gui[chIEntry1].text, gui[chIEntry2].text, gui[chIEntry3].text, gui[chIEntry4].text 
     addChangedItem(uniqueID, name, dmg, min)
     updateItemList()
+    showMsg("Предмет успешно добавлен", msg2, msg3)
 end
 
 function removeChangedItemCallback(gui, id)
@@ -426,6 +431,7 @@ function removeChangedItemCallback(gui, id)
     if not rowData then return end
     removeChangedItem(rowData.uniqueID, rowData.dmg)
     updateItemList()
+    showMsg("Предмет успешно удален", msg2, msg3)
 end
 
 gui.clearScreen()
