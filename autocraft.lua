@@ -78,7 +78,6 @@ local gui = require("library/gui")
         local craft = ae2.getCraftables({name = uniqueID, damage = dmg})[1]
         if not craft then showMsg("Отсутствует крафт", uniqueID, name .. " " .. dmg) return false end
 
-        print(uniqueID, dmg, changedItemConfig, isItemHasInConfig(uniqueID, dmg, changedItemConfig))
         dmg = dmg and tonumber(dmg) or 0
         if isItemHasInConfig(uniqueID, dmg, changedItemConfig) then
             changeChangedItem(uniqueID, dmg, min)
@@ -122,7 +121,23 @@ local lastrequest = 0
 local autoRefreshIsActice = false
 
 
+local function sS(text, width) -- stringSpacing
+    text = text or ""
+    width = width or 38
+    local wlen = unicode.wlen(text) or 0
+    local margin = math.floor((width - wlen) / 2)
 
+    return string.rep(" ", margin) .. text .. string.rep(" ", width - wlen - margin)
+end
+
+local function sS2(text, width) -- stringSpacing
+    text = text or ""
+    width = width or 38
+    local wlen = unicode.wlen(text) or 0
+    local margin = width - wlen
+
+    return text .. string.rep(" ", margin)
+end
 
 local function compare(a,b)
     return a.name < b.name
@@ -148,24 +163,6 @@ local function getButtonText(text, width)
     end
 
     return text
-end
-
-local function sS(text, width) -- stringSpacing
-    text = text or ""
-    width = width or 38
-    local wlen = unicode.wlen(text) or 0
-    local margin = math.floor((width - wlen) / 2)
-
-    return string.rep(" ", margin) .. text .. string.rep(" ", width - wlen - margin)
-end
-
-local function sS2(text, width) -- stringSpacing
-    text = text or ""
-    width = width or 38
-    local wlen = unicode.wlen(text) or 0
-    local margin = width - wlen
-
-    return text .. string.rep(" ", margin)
 end
 
 function getItemData(uniqueID, label, dmg)
