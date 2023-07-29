@@ -29,7 +29,7 @@ local gui = require("library/gui")
     end
     function saveChangedItems() 
         local file = io.open(changedConfigPath, "w")
-        file:write({})--erialization.serialize(changedItemConfig))
+        file:write(serialization.serialize({})--serialization.serialize(changedItemConfig))
         file:close()
     end
 
