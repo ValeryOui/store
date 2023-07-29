@@ -33,6 +33,14 @@ local gui = require("library/gui")
         file:close()
     end
 
+    function isItemHasInConfig(uniqueID, dmg, tbl)
+        for _, row in ipairs(tbl or changedItemConfig) do
+           if row.uniqueID == uniqueID and row.dmg == dmg then return true end
+        end
+
+        return false
+    end
+
     loadChangedItems() 
     for _, row in ipairs(changedItemConfig) do
         if not isItemHasInConfig(row.uniqueID, row.dmg, itemConfig) then
@@ -40,14 +48,6 @@ local gui = require("library/gui")
             row.isChanged = true
             table.insert(itemConfig, row)
         end
-    end
-
-    function isItemHasInConfig(uniqueID, dmg, tbl)
-        for _, row in ipairs(tbl or changedItemConfig) do
-           if row.uniqueID == uniqueID and row.dmg == dmg then return true end
-        end
-
-        return false
     end
 
     function changeChangedItem(uniqueID, name, dmg, min)
