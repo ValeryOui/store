@@ -83,14 +83,14 @@ local gui = require("library/gui")
         saveChangedItems() 
     end
 
-    function removeChangedItem(uniqueID, name, dmg, min)
+    function removeChangedItem(uniqueID, dmg)
         for _, row in ipairs(changedItemConfig) do
-            if row.name == name and row.dmg == dmg then 
+            if row.uniqueID == uniqueID and row.dmg == dmg then 
                 table.remove(changedItemConfig, _)
                 saveChangedItems() 
 
                 for _, row in ipairs(itemConfig) do
-                    if row.name == name and row.dmg == dmg then
+                    if row.uniqueID == uniqueID and row.dmg == dmg then
                         table.remove(itemConfig, _)
                     end
                 end
@@ -420,10 +420,11 @@ function addChangedItemCallback(gui, id)
 end
 
 function removeChangedItemCallback(gui, id)
-    if not _valid() == false then return end
+    local rowID = gui.getSelected(gui, list_1_ID)
+    local rowData = itemListData[rowID]
 
-    local uniqueID, name, dmg, min = gui[chIEntry1].text, gui[chIEntry2].text, gui[chIEntry3].text, gui[chIEntry4].text 
-    removeChangedItem(uniqueID, name, dmg, min)
+    if not rowData then return end
+    removeChangedItem(rowData.uniqueID, rowData.dmg)
     updateItemList()
 end
 
