@@ -35,13 +35,15 @@ local gui = require("library/gui")
 
     loadChangedItems() 
     for _, row in ipairs(changedItemConfig) do
-        row.name = "(NT) "..row.name
-        row.isChanged = true
-        table.insert(itemConfig, row)
+        if not isItemHasInConfig(row.uniqueID, row.dmg, itemConfig) then
+            row.name = "(NT) "..row.name
+            row.isChanged = true
+            table.insert(itemConfig, row)
+        end
     end
 
-    function isItemHasInConfig(uniqueID, dmg)
-        for _, row in ipairs(changedItemConfig) do
+    function isItemHasInConfig(uniqueID, dmg, tbl)
+        for _, row in ipairs(tbl or changedItemConfig) do
            if row.uniqueID == uniqueID and row.dmg == dmg then return true end
         end
 
@@ -277,6 +279,7 @@ local function updateActiveRequests()
     end
 
     statusUpdateText()
+    updateItemsAmount()
 end
 
 local function getEmptyCpus()
