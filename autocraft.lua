@@ -29,7 +29,7 @@ local gui = require("library/gui")
     end
     function saveChangedItems() 
         local file = io.open(changedConfigPath, "w")
-        file:write(serialization.serialize({})--serialization.serialize(changedItemConfig))
+        file:write(serialization.serialize(changedItemConfig))--serialization.serialize({}))--
         file:close()
     end
 
@@ -76,7 +76,7 @@ local gui = require("library/gui")
             return false 
         end
 
-        local row = {uniqueID = uniqueID, id = dmg, name = name, isChanged == true, minItems = min}
+        local row = {uniqueID = uniqueID, dmg = dmg, name = name, isChanged == true, minItems = min}
         table.insert(changedItemConfig, row)
         table.insert(itemConfig, row)
         saveChangedItems() 
@@ -458,7 +458,7 @@ autoRefreshButton = gui.newButton(myGui, 98, 27, getButtonText("Вкл/выкл 
 autoRefreshButton_down = gui.newButton(myGui, 98, 28, getButtonText("", 25), autoRefreshCallback)
 
 addChangedItemButton = gui.newButton(myGui, 98, 30, getButtonText("Добавить предмет"), addChangedItemCallback)
-removeChangedItemButton = gui.newButton(myGui, 115, 30, getButtonText("Удалить предмет"), removeChangedItemCallback)
+removeChangedItemButton = gui.newButton(myGui, 117, 30, getButtonText("Удалить предмет"), removeChangedItemCallback)
 
 chILabel1 = gui.newLabel(myGui, 98, 32, "uniqueID")
 chILabel2 = gui.newLabel(myGui, 98, 33, "Название")
