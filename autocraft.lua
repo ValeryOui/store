@@ -62,7 +62,7 @@ local gui = require("library/gui")
                     for _, row in ipairs(itemConfig) do
                         if row.uniqueID == uniqueID and row.dmg == dmg then
                             row.minItems = min
-                            row.name = name
+                            row.name = "(NT) "..name
                             break
                         end
                     end
@@ -79,6 +79,7 @@ local gui = require("library/gui")
         if not craft then showMsg("Отсутствует крафт", uniqueID, name .. " " .. dmg) return false end
 
         local _, dmg = string.match(id, "(%d+):(%d+)")
+        print(uniqueID, dmg, changedItemConfig, isItemHasInConfig(uniqueID, dmg, changedItemConfig))
         if isItemHasInConfig(uniqueID, dmg, changedItemConfig) then
             changeChangedItem(uniqueID, dmg, min)
 
