@@ -291,8 +291,8 @@ function drawPage(page)
   end
 
   if page == 6 then
-    image.DrawImage(image.images[1], 8, 15)
-    image.DrawImage(image.images[2], 156, 15)
+    image.DrawImage(image.images[1], 8, 17)
+    image.DrawImage(image.images[2], 136, 17)
   end
 
   curPage = page
