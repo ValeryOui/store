@@ -320,24 +320,8 @@ end
 local lastrequest = 0
 function updateMinItems()
   if lastrequest < CurTime() then
-    local getItemsInNetwork = ae2.getItemsInNetwork()
-    local flag = false
-    
-    for _, data in pairs(itemConfig) do
-      for _, networkData in ipairs(getItemsInNetwork) do
-        if data.uniqueID == networkData.name and data.dmg == networkData.damage then
-          if data.amount < 1 and networkData.size ~= data.amount then flag = true end
-
-          data.amount = networkData.size
-          break
-        end
-      end
-    end
-
-    os.sleep(0.01)
-    
+    updateBuyList()
     lastrequest = CurTime() + 1
-    if flag then updateList(myGui, list_1_ID, myGui[filterentry].text) end
   end
 end
 
