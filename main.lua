@@ -284,14 +284,15 @@ function drawPage(page)
   setPageVisible(curPage, false)
   setPageVisible(page, true)
 
-  if page == 2 or page == 3 then
+  if page == 2 or page == 3 or page == 6 then
     setBackButtonEnable(true)
   else
     setBackButtonEnable(false)
   end
 
-  if page == 5 then
-    image.DrawImage(image.images[1], 8, 8)
+  if page == 6 then
+    image.DrawImage(image.images[1], 8, 15)
+    image.DrawImage(image.images[2], 156, 15)
   end
 
   curPage = page
@@ -334,6 +335,7 @@ function drawBuyPage()
   buyListCallback(myGui, list_1_ID, 1)
 end
 function drawDepositPage() drawPage(3) end
+function drawDevelopersPage() drawPage(6) end
 
 
 
@@ -575,9 +577,13 @@ depositmenu_up = gui.newButton(myGui, "center", 21, getButtonText(""), drawDepos
 depositmenu = gui.newButton(myGui, "center", 22, getButtonText("Пополнение"), drawDepositPage)
 depositmenu_down = gui.newButton(myGui, "center", 23, getButtonText(""), drawDepositPage)
 
-exitbutton_up = gui.newButton(myGui, "center", 25, getButtonText(""), exitButtonCallback) -- @todo Убрать когда сделаю шоп
-exitbutton = gui.newButton(myGui, "center", 26, getButtonText("Выход"), exitButtonCallback) -- @todo Убрать когда сделаю шоп
-exitbutton_down = gui.newButton(myGui, "center", 27, getButtonText(""), exitButtonCallback) -- @todo Убрать когда сделаю шоп
+developers_up = gui.newButton(myGui, "center", 25, getButtonText(""), drawDevelopersPage)
+developers = gui.newButton(myGui, "center", 26, getButtonText(""), drawDevelopersPage)
+developers_down = gui.newButton(myGui, "center", 27, getButtonText(""), drawDevelopersPage)
+
+exitbutton_up = gui.newButton(myGui, "center", 29, getButtonText(""), exitButtonCallback) -- @todo Убрать когда сделаю шоп
+exitbutton = gui.newButton(myGui, "center", 30, getButtonText("Выход"), exitButtonCallback) -- @todo Убрать когда сделаю шоп
+exitbutton_down = gui.newButton(myGui, "center", 31, getButtonText(""), exitButtonCallback) -- @todo Убрать когда сделаю шоп
 
 pages[1] = {buymenu_up, buymenu, buymenu_down, 
             depositmenu_up, depositmenu, depositmenu_down, 
@@ -614,6 +620,10 @@ pages[4] = {loadingLabel} setPageVisible(4, false)
 startLabel = gui.newLabel(myGui, "center", 21, "Добро пожаловать в наш магазин.")
 startLabel2 = gui.newLabel(myGui, "center", 22, "Чтобы продолжить, авторизируйтесь встав на плиту")
 pages[5] = {startLabel,startLabel2 } setPageVisible(5, false)
+
+pages[6] = {}
+
+
 
 
 -- Programm
