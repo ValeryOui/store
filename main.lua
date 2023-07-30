@@ -317,15 +317,31 @@ function CurTime()
     return os.time() / 100
 end
 
-function updateChooseRow()
-  itemListData[buyListChoose].amount = getItemAmount(itemListData[buyListChoose].uniqueID, itemListData[buyListChoose].label, itemListData[buyListChoose].dmg)
-  gui.renameList(myGui, list_1_ID, buyListChoose, getListRow(buyListChoose, itemListData[buyListChoose].name, itemListData[buyListChoose].id, itemListData[buyListChoose].amount, itemListData[buyListChoose].price))
+function updateChooseRow(rowID)
+  rowID = rowID or buyListChoose
+
+  itemListData[rowID].amount = getItemAmount(itemListData[rowID].uniqueID, itemListData[rowID].label, itemListData[rowID].dmg)
+  gui.renameList(myGui, list_1_ID, rowID, getListRow(rowID, itemListData[rowID].name, itemListData[rowID].id, itemListData[rowID].amount, itemListData[rowID].price))
 end
 
 local lastrequest = 0
 function updateMinItems()
   if lastrequest < CurTime() then
-    updateChooseRow()
+    os.sleep(0.01)
+    local getItemsInNetwork = ae2.getItemsInNetwork()
+    
+    for rowID, data in pairs(itemConfig) do
+      for _, networkData in ipairs(getItemsInNetwork) do
+        if data.uniqueID == networkData.name and data.dmg == networkData.damage then
+          if data.amount < 1 and networkData.size > 0 then updateChooseRow(rowID) end
+
+          data.amount = networkData.size
+          break
+        end
+      end
+    end
+
+    os.sleep(0.01)
     lastrequest = CurTime() + 1
   end
 end
