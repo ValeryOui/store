@@ -308,6 +308,10 @@ function updateList(guiID, listID, subtext)
     gui.tableList(guiID, list_1_ID, getItemList(subtext))
 end
 
+function updateMinItems()
+  
+end
+
 function updateBuyList()
   updateItemsAmount()
   updateList(myGui, list_1_ID, myGui[filterentry].text)
@@ -640,4 +644,5 @@ end
 while true do
   gui.runGui(myGui)
   checkPimPlayer()
+  updateMinItems()
 end
