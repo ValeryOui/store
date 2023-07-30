@@ -142,7 +142,7 @@ function changeChangedItem(uniqueID, name, dmg, min)
 end
 
 function addChangedItem(uniqueID, name, id, min)
-    local _, dmg = string.match(v.id, "(%d+):(%d+)")
+    local _, dmg = string.match(id, "(%d+):(%d+)")
     dmg = dmg and tonumber(dmg) or 0
     
     local craft = ae2.getCraftables({name = uniqueID, damage = dmg})[1]
