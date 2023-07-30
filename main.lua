@@ -290,6 +290,10 @@ function drawPage(page)
     setBackButtonEnable(false)
   end
 
+  if page == 5 then
+    image.DrawImage(image.images[1], 8, 8)
+  end
+
   curPage = page
 end
 
@@ -309,7 +313,7 @@ function updateList(guiID, listID, subtext)
 end
 
 function updateMinItems()
-  
+
 end
 
 function updateBuyList()
