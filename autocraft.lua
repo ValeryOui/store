@@ -54,7 +54,7 @@ local gui = require("library/gui")
 local itemListChoose = {}
 local itemListStrings = {}
 local itemListData = {}
-local delay = 3
+local delay = 1
 local lastrequest = 0
 local autoRefreshIsActice = false
 
