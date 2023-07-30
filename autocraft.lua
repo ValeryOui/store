@@ -44,7 +44,7 @@ local gui = require("library/gui")
     loadChangedItems() 
     for _, row in ipairs(changedItemConfig) do
         if not isItemHasInConfig(row.uniqueID, row.dmg, itemConfig) then
-            row.name = "(NT) "..row.name
+            row.name = row.name
             row.isChanged = true
             table.insert(itemConfig, row)
         end
@@ -142,10 +142,12 @@ function changeChangedItem(uniqueID, name, dmg, min)
 end
 
 function addChangedItem(uniqueID, name, id, min)
+    local _, dmg = string.match(v.id, "(%d+):(%d+)")
+    dmg = dmg and tonumber(dmg) or 0
+    
     local craft = ae2.getCraftables({name = uniqueID, damage = dmg})[1]
     if not craft then showMsg("Отсутствует крафт", uniqueID, name .. " " .. dmg) return false end
 
-    dmg = dmg and tonumber(dmg) or 0
     if isItemHasInConfig(uniqueID, dmg, changedItemConfig) then
         changeChangedItem(uniqueID, name, dmg, min)
 
