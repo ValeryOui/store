@@ -578,7 +578,7 @@ depositmenu = gui.newButton(myGui, "center", 22, getButtonText("Пополнен
 depositmenu_down = gui.newButton(myGui, "center", 23, getButtonText(""), drawDepositPage)
 
 developers_up = gui.newButton(myGui, "center", 25, getButtonText(""), drawDevelopersPage)
-developers = gui.newButton(myGui, "center", 26, getButtonText(""), drawDevelopersPage)
+developers = gui.newButton(myGui, "center", 26, getButtonText("О разработчиках"), drawDevelopersPage)
 developers_down = gui.newButton(myGui, "center", 27, getButtonText(""), drawDevelopersPage)
 
 exitbutton_up = gui.newButton(myGui, "center", 29, getButtonText(""), exitButtonCallback) -- @todo Убрать когда сделаю шоп
@@ -587,6 +587,7 @@ exitbutton_down = gui.newButton(myGui, "center", 31, getButtonText(""), exitButt
 
 pages[1] = {buymenu_up, buymenu, buymenu_down, 
             depositmenu_up, depositmenu, depositmenu_down, 
+            developers_up, developers, developers_down,
             exitbutton_up, exitbutton, exitbutton_down}
 
 -- buyPage 
