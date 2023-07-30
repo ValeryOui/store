@@ -58,8 +58,8 @@ function image.DrawImage(pictureString, offsetx, offsety)
   local height = group.height
   local data = group.data
 
-  for y, array in ipairs(data) do
-    for x, info in ipairs(array) do
+  for y, array in pairs(data) do
+    for x, info in pairs(array) do
       image.DrawPixel(offsetx, offsety, x, y, info.char, info.background, info.foreground, info.alpha)
     end
   end
