@@ -317,10 +317,15 @@ function CurTime()
     return os.time() / 100
 end
 
+function updateChooseRow()
+  itemListData[buyListChoose].amount = getItemAmount(itemListData[buyListChoose].uniqueID, itemListData[buyListChoose].label, itemListData[buyListChoose].dmg)
+  gui.renameList(myGui, list_1_ID, buyListChoose, getListRow(buyListChoose, itemListData[buyListChoose].name, itemListData[buyListChoose].id, itemListData[buyListChoose].amount, itemListData[buyListChoose].price))
+end
+
 local lastrequest = 0
 function updateMinItems()
   if lastrequest < CurTime() then
-    updateBuyList()
+    updateChooseRow()
     lastrequest = CurTime() + 1
   end
 end
@@ -560,9 +565,7 @@ function buySuccessCallback(guiID, id)
   local peace2 = unicode.wlen(itemListData[buyListChoose].name) > (38 - pwlen) and (unicode.sub(itemListData[buyListChoose].name, 1, 35 - pwlen) .. "...") or itemListData[buyListChoose].name
   showMsg("Покупка произошла успешно", peace1 .. peace2 .. peace3, "Со счета снято " .. price .. " защекоинов")
   updatePlayerMoney()
-  
-  itemListData[buyListChoose].amount = getItemAmount(itemListData[buyListChoose].uniqueID, itemListData[buyListChoose].label, itemListData[buyListChoose].dmg)
-  gui.renameList(myGui, list_1_ID, buyListChoose, getListRow(buyListChoose, itemListData[buyListChoose].name, itemListData[buyListChoose].id, itemListData[buyListChoose].amount, itemListData[buyListChoose].price))
+  updateChooseRow()
 end
 
 
