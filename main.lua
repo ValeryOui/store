@@ -292,7 +292,7 @@ function drawPage(page)
 
   if page == 6 then
     image.DrawImage(image.images[1], 8, 17)
-    image.DrawImage(image.images[2], 96, 17)
+    image.DrawImage(image.images[2], 90, 17)
   end
 
   curPage = page
@@ -313,8 +313,16 @@ function updateList(guiID, listID, subtext)
     gui.tableList(guiID, list_1_ID, getItemList(subtext))
 end
 
-function updateMinItems()
+function CurTime()
+    return os.time() / 100
+end
 
+local lastrequest = 0
+function updateMinItems()
+  if lastrequest < CurTime() then
+    updateItemsAmount()
+    lastrequest = CurTime() + 1
+  end
 end
 
 function updateBuyList()
